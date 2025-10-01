@@ -19,4 +19,5 @@ Route::get('/nama/{param1}', function ($param1) {
 });
 Route::get('/admin/{param1}', [AdminController::class, 'show']);
 
+Route::get('/admin', [AdminController::class, 'index']);
 Route::get('/pegawai', [PegawaiController::class, 'index']);
