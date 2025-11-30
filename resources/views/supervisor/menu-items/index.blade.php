@@ -4,170 +4,228 @@
 @section('subtitle', 'Manage restaurant menu items and availability')
 
 @section('breadcrumbs')
-<div class="flex items-center space-x-2 text-sm">
-    <span class="text-gray-500 font-medium">Menu Items</span>
+<div class="flex items-center" style="gap: var(--space-2); font-size: var(--text-sm);">
+    <span class="text-secondary font-medium">Menu Items</span>
 </div>
 @endsection
 
 @section('actions')
-<a href="{{ route('supervisor.menu-items.create') }}" 
-   class="flex items-center px-6 py-3 bg-gradient-to-r from-orange-500 to-red-500 text-white rounded-xl font-bold hover:shadow-lg transition-all duration-200 hover:scale-105">
-    <i class="fas fa-plus mr-2"></i>Add Menu Item
+<a href="{{ route('supervisor.menu-items.create') }}" class="btn btn-primary">
+    <i class="fas fa-plus" style="margin-right: var(--space-2);"></i>Add Menu Item
 </a>
 @endsection
 
 @section('content')
-<!-- Header Stats -->
-<div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-    <div class="bg-white rounded-2xl shadow-lg border border-gray-200/60 p-6 backdrop-blur-sm bg-white/90">
-        <div class="flex items-center justify-between">
-            <div>
-                <p class="text-gray-600 text-sm font-medium">Total Items</p>
-                <p class="text-3xl font-black text-gray-900 mt-2">{{ $menuItems->count() }}</p>
-            </div>
-            <div class="w-12 h-12 bg-gradient-to-br from-orange-500 to-red-500 rounded-2xl flex items-center justify-center shadow-lg">
-                <i class="fas fa-utensils text-white text-xl"></i>
-            </div>
-        </div>
-    </div>
-
-    <div class="bg-white rounded-2xl shadow-lg border border-gray-200/60 p-6 backdrop-blur-sm bg-white/90">
-        <div class="flex items-center justify-between">
-            <div>
-                <p class="text-gray-600 text-sm font-medium">Available</p>
-                <p class="text-3xl font-black text-gray-900 mt-2">{{ $menuItems->where('available', true)->count() }}</p>
-            </div>
-            <div class="w-12 h-12 bg-gradient-to-br from-green-500 to-emerald-500 rounded-2xl flex items-center justify-center shadow-lg">
-                <i class="fas fa-check-circle text-white text-xl"></i>
-            </div>
-        </div>
-    </div>
-
-    <div class="bg-white rounded-2xl shadow-lg border border-gray-200/60 p-6 backdrop-blur-sm bg-white/90">
-        <div class="flex items-center justify-between">
-            <div>
-                <p class="text-gray-600 text-sm font-medium">Unavailable</p>
-                <p class="text-3xl font-black text-gray-900 mt-2">{{ $menuItems->where('available', false)->count() }}</p>
-            </div>
-            <div class="w-12 h-12 bg-gradient-to-br from-red-500 to-pink-500 rounded-2xl flex items-center justify-center shadow-lg">
-                <i class="fas fa-times-circle text-white text-xl"></i>
-            </div>
-        </div>
-    </div>
-
-    <div class="bg-white rounded-2xl shadow-lg border border-gray-200/60 p-6 backdrop-blur-sm bg-white/90">
-        <div class="flex items-center justify-between">
-            <div>
-                <p class="text-gray-600 text-sm font-medium">Avg Price</p>
-                <p class="text-3xl font-black text-gray-900 mt-2">Rp {{ number_format($menuItems->avg('price') ?? 0, 0, ',', '.') }}</p>
-            </div>
-            <div class="w-12 h-12 bg-gradient-to-br from-blue-500 to-purple-500 rounded-2xl flex items-center justify-center shadow-lg">
-                <i class="fas fa-money-bill-wave text-white text-xl"></i>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Menu Items Table -->
-<div class="bg-white rounded-2xl shadow-lg border border-gray-200/60 backdrop-blur-sm bg-white/90">
-    <div class="px-6 py-5 border-b border-gray-200/60">
-        <div class="flex items-center justify-between">
-            <div class="flex items-center space-x-3">
-                <div class="w-10 h-10 bg-gradient-to-br from-orange-500 to-red-500 rounded-xl flex items-center justify-center shadow-lg">
-                    <i class="fas fa-utensils text-white text-lg"></i>
+<div class="container">
+    <!-- Header Stats -->
+    <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: var(--space-6); margin-bottom: var(--space-8);">
+        <div class="card">
+            <div class="card-body">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-sm text-secondary font-medium">Total Items</p>
+                        <p class="text-3xl font-bold text-primary" style="margin-top: var(--space-2);">{{ $allMenuItems->count() }}</p>
+                    </div>
+                    <div style="width: 48px; height: 48px; background: var(--accent-color); border-radius: var(--radius-lg); display: flex; align-items: center; justify-content: center; box-shadow: var(--shadow-base);">
+                        <i class="fas fa-utensils" style="color: var(--primary-dark); font-size: var(--text-xl);"></i>
+                    </div>
                 </div>
-                <div>
-                    <h2 class="text-xl font-bold text-gray-900">All Menu Items</h2>
-                    <p class="text-sm text-gray-600">Manage your restaurant menu</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-body">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-sm text-secondary font-medium">Available</p>
+                        <p class="text-3xl font-bold text-primary" style="margin-top: var(--space-2);">{{ $allMenuItems->where('available', true)->count() }}</p>
+                    </div>
+                    <div style="width: 48px; height: 48px; background: #28a745; border-radius: var(--radius-lg); display: flex; align-items: center; justify-content: center; box-shadow: var(--shadow-base);">
+                        <i class="fas fa-check-circle" style="color: white; font-size: var(--text-xl);"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-body">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-sm text-secondary font-medium">Unavailable</p>
+                        <p class="text-3xl font-bold text-primary" style="margin-top: var(--space-2);">{{ $allMenuItems->where('available', false)->count() }}</p>
+                    </div>
+                    <div style="width: 48px; height: 48px; background: #dc3545; border-radius: var(--radius-lg); display: flex; align-items: center; justify-content: center; box-shadow: var(--shadow-base);">
+                        <i class="fas fa-times-circle" style="color: white; font-size: var(--text-xl);"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-body">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-sm text-secondary font-medium">Avg Price</p>
+                        <p class="text-3xl font-bold text-primary" style="margin-top: var(--space-2);">Rp {{ number_format($allMenuItems->avg('price') ?? 0, 0, ',', '.') }}</p>
+                    </div>
+                    <div style="width: 48px; height: 48px; background: var(--accent-color); border-radius: var(--radius-lg); display: flex; align-items: center; justify-content: center; box-shadow: var(--shadow-base);">
+                        <i class="fas fa-money-bill-wave" style="color: var(--primary-dark); font-size: var(--text-xl);"></i>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="overflow-x-auto">
-        <table class="w-full">
-            <thead>
-                <tr class="bg-gray-50 border-b border-gray-200">
-                    <th class="px-6 py-4 text-left text-sm font-bold text-gray-900">Name</th>
-                    <th class="px-6 py-4 text-left text-sm font-bold text-gray-900">Price</th>
-                    <th class="px-6 py-4 text-left text-sm font-bold text-gray-900">Status</th>
-                    <th class="px-6 py-4 text-left text-sm font-bold text-gray-900">Actions</th>
-                </tr>
-            </thead>
-            <tbody class="divide-y divide-gray-200">
-                @foreach($menuItems as $menuItem)
-                <tr class="hover:bg-gray-50 transition-colors duration-150">
-                    <td class="px-6 py-4 whitespace-nowrap">
-                        <div class="flex items-center">
-                            <div class="w-10 h-10 bg-gradient-to-br from-orange-500 to-red-500 rounded-xl flex items-center justify-center mr-3 shadow-lg">
-                                <i class="fas fa-utensils text-white text-sm"></i>
-                            </div>
-                            <div>
-                                <span class="font-bold text-gray-900 block">{{ $menuItem->name }}</span>
-                                <span class="text-xs text-gray-500">ID: {{ $menuItem->id }}</span>
-                            </div>
-                        </div>
-                    </td>
-                    <td class="px-6 py-4 whitespace-nowrap">
-                        <span class="font-bold text-gray-900 text-lg">Rp {{ number_format($menuItem->price, 0, ',', '.') }}</span>
-                    </td>
-                    <td class="px-6 py-4 whitespace-nowrap">
-                        @if($menuItem->available)
-                        <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-bold bg-green-100 text-green-800">
-                            <i class="fas fa-check-circle mr-1"></i> Available
-                        </span>
-                        @else
-                        <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-bold bg-red-100 text-red-800">
-                            <i class="fas fa-times-circle mr-1"></i> Unavailable
-                        </span>
-                        @endif
-                    </td>
-                    <td class="px-6 py-4 whitespace-nowrap">
-                        <div class="flex items-center space-x-2">
-                            <a href="{{ route('supervisor.menu-items.edit', $menuItem) }}" 
-                               class="flex items-center px-3 py-2 bg-blue-500 text-white rounded-lg font-semibold hover:bg-blue-600 transition-all duration-200">
-                                <i class="fas fa-edit text-sm"></i>
-                            </a>
-                            <a href="{{ route('supervisor.menu-items.show', $menuItem) }}" 
-                               class="flex items-center px-3 py-2 bg-green-500 text-white rounded-lg font-semibold hover:bg-green-600 transition-all duration-200">
-                                <i class="fas fa-eye text-sm"></i>
-                            </a>
-                            <form action="{{ route('supervisor.menu-items.toggle-availability', $menuItem) }}" method="POST" class="inline">
-                                @csrf
-                                <button type="submit" 
-                                        class="flex items-center px-3 py-2 {{ $menuItem->available ? 'bg-yellow-500 hover:bg-yellow-600' : 'bg-green-500 hover:bg-green-600' }} text-white rounded-lg font-semibold transition-all duration-200">
-                                    <i class="fas fa-toggle-{{ $menuItem->available ? 'on' : 'off' }} text-sm"></i>
-                                </button>
-                            </form>
-                            <form action="{{ route('supervisor.menu-items.destroy', $menuItem) }}" method="POST" class="inline">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" 
-                                        onclick="return confirm('Are you sure you want to delete {{ $menuItem->name }}?')"
-                                        class="flex items-center px-3 py-2 bg-red-500 text-white rounded-lg font-semibold hover:bg-red-600 transition-all duration-200">
-                                    <i class="fas fa-trash text-sm"></i>
-                                </button>
-                            </form>
-                        </div>
-                    </td>
-                </tr>
-                @endforeach
-            </tbody>
-        </table>
+    <!-- Filters -->
+    <div class="card" style="margin-bottom: var(--space-6);">
+        <div class="card-body">
+            <form method="GET" action="{{ route('supervisor.menu-items.index') }}" class="flex items-center" style="gap: var(--space-4); flex-wrap: wrap;">
+                <div style="flex: 1; min-width: 200px;">
+                    <label class="form-label">Search by Name</label>
+                    <input type="text" name="name" value="{{ request('name') }}" placeholder="Menu item name..." class="form-input">
+                </div>
+                <div style="flex: 1; min-width: 150px;">
+                    <label class="form-label">Min Price</label>
+                    <input type="number" name="price_min" value="{{ request('price_min') }}" placeholder="0" step="0.01" class="form-input">
+                </div>
+                <div style="flex: 1; min-width: 150px;">
+                    <label class="form-label">Max Price</label>
+                    <input type="number" name="price_max" value="{{ request('price_max') }}" placeholder="999999" step="0.01" class="form-input">
+                </div>
+                <div style="flex: 1; min-width: 150px;">
+                    <label class="form-label">Availability</label>
+                    <select name="available" class="form-input">
+                        <option value="">All</option>
+                        <option value="1" {{ request('available') === '1' ? 'selected' : '' }}>Available</option>
+                        <option value="0" {{ request('available') === '0' ? 'selected' : '' }}>Unavailable</option>
+                    </select>
+                </div>
+                <div style="display: flex; gap: var(--space-2); align-items: flex-end;">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-search" style="margin-right: var(--space-2);"></i>Filter
+                    </button>
+                    <a href="{{ route('supervisor.menu-items.index') }}" class="btn btn-outline">
+                        <i class="fas fa-times" style="margin-right: var(--space-2);"></i>Clear
+                    </a>
+                </div>
+            </form>
+        </div>
     </div>
 
-    @if($menuItems->isEmpty())
-    <div class="text-center py-16">
-        <div class="w-24 h-24 bg-gradient-to-br from-gray-100 to-gray-200 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg">
-            <i class="fas fa-utensils text-gray-400 text-3xl"></i>
+    <!-- Menu Items Table -->
+    <div class="card">
+        <div class="card-header">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center" style="gap: var(--space-3);">
+                    <div style="width: 40px; height: 40px; background: var(--accent-color); border-radius: var(--radius-lg); display: flex; align-items: center; justify-content: center; box-shadow: var(--shadow-base);">
+                        <i class="fas fa-utensils" style="color: var(--primary-dark); font-size: var(--text-lg);"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-xl font-bold text-primary">All Menu Items</h2>
+                        <p class="text-sm text-secondary">Manage your restaurant menu</p>
+                    </div>
+                </div>
+            </div>
         </div>
-        <h3 class="text-xl font-bold text-gray-900 mb-2">No menu items found</h3>
-        <p class="text-gray-600 mb-6 max-w-md mx-auto">Start building your menu by adding the first delicious item for your customers.</p>
-        <a href="{{ route('supervisor.menu-items.create') }}" 
-           class="inline-flex items-center px-6 py-3 bg-gradient-to-r from-orange-500 to-red-500 text-white rounded-xl font-bold hover:shadow-lg transition-all duration-200 hover:scale-105">
-            <i class="fas fa-plus mr-2"></i>Add First Menu Item
-        </a>
+
+        <div style="overflow-x: auto;">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Price</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach($menuItems as $menuItem)
+                    <tr>
+                        <td>
+                            <div class="flex items-center">
+                                <div style="width: 40px; height: 40px; background: var(--accent-color); border-radius: var(--radius-lg); display: flex; align-items: center; justify-content: center; margin-right: var(--space-3); box-shadow: var(--shadow-base);">
+                                    <i class="fas fa-utensils" style="color: var(--primary-dark); font-size: var(--text-sm);"></i>
+                                </div>
+                                <div>
+                                    <span class="font-bold text-primary block">{{ $menuItem->name }}</span>
+                                    <span class="text-xs text-secondary">ID: {{ $menuItem->id }}</span>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <span class="font-bold text-primary" style="font-size: var(--text-lg);">Rp {{ number_format($menuItem->price, 0, ',', '.') }}</span>
+                        </td>
+                        <td>
+                            @if($menuItem->available)
+                            <span class="badge badge-success">
+                                <i class="fas fa-check-circle" style="margin-right: var(--space-1);"></i> Available
+                            </span>
+                            @else
+                            <span class="badge badge-danger">
+                                <i class="fas fa-times-circle" style="margin-right: var(--space-1);"></i> Unavailable
+                            </span>
+                            @endif
+                        </td>
+                        <td>
+                            <div class="flex items-center" style="gap: var(--space-2);">
+                                <a href="{{ route('supervisor.menu-items.edit', $menuItem) }}" class="btn btn-primary" style="padding: var(--space-2) var(--space-3);">
+                                    <i class="fas fa-edit" style="font-size: var(--text-sm);"></i>
+                                </a>
+                                <a href="{{ route('supervisor.menu-items.show', $menuItem) }}" class="btn btn-outline" style="padding: var(--space-2) var(--space-3); background: #28a745; color: white; border-color: #28a745;">
+                                    <i class="fas fa-eye" style="font-size: var(--text-sm);"></i>
+                                </a>
+                                <form action="{{ route('supervisor.menu-items.toggle-availability', $menuItem) }}" method="POST" style="display: inline;">
+                                    @csrf
+                                    <button type="submit" 
+                                            class="btn" style="padding: var(--space-2) var(--space-3); background: {{ $menuItem->available ? 'var(--accent-color)' : '#28a745' }}; color: var(--primary-dark); border: none;">
+                                        <i class="fas fa-toggle-{{ $menuItem->available ? 'on' : 'off' }}" style="font-size: var(--text-sm);"></i>
+                                    </button>
+                                </form>
+                                <form action="{{ route('supervisor.menu-items.destroy', $menuItem) }}" method="POST" style="display: inline;">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" 
+                                            onclick="return confirm('Are you sure you want to delete {{ $menuItem->name }}?')"
+                                            class="btn" style="padding: var(--space-2) var(--space-3); background: #dc3545; color: white; border: none;">
+                                        <i class="fas fa-trash" style="font-size: var(--text-sm);"></i>
+                                    </button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
+
+        @if($menuItems->isEmpty())
+        <div class="card-body text-center" style="padding: var(--space-16);">
+            <div style="width: 96px; height: 96px; background: var(--background-light); border-radius: var(--radius-xl); display: flex; align-items: center; justify-content: center; margin: 0 auto var(--space-4); box-shadow: var(--shadow-base);">
+                <i class="fas fa-utensils" style="color: var(--text-light); font-size: var(--text-3xl);"></i>
+            </div>
+            <h3 class="text-xl font-bold text-primary" style="margin-bottom: var(--space-2);">No menu items found</h3>
+            <p class="text-secondary" style="margin-bottom: var(--space-6); max-width: 400px; margin-left: auto; margin-right: auto;">Start building your menu by adding the first delicious item for your customers.</p>
+            <a href="{{ route('supervisor.menu-items.create') }}" class="btn btn-primary">
+                <i class="fas fa-plus" style="margin-right: var(--space-2);"></i>Add First Menu Item
+            </a>
+        </div>
+        @endif
+
+        <!-- Pagination -->
+        @if($menuItems->hasPages())
+        <div class="card-footer" style="padding: var(--space-4) var(--space-6); border-top: 1px solid var(--border-light);">
+            <div class="pagination-wrapper">
+                <div class="pagination-info">
+                    <span class="pagination-text">
+                        Showing {{ $menuItems->firstItem() }} to {{ $menuItems->lastItem() }} of {{ $menuItems->total() }} results
+                    </span>
+                </div>
+                <nav aria-label="Page navigation">
+                    {{ $menuItems->links() }}
+                </nav>
+            </div>
+        </div>
+        @endif
     </div>
-    @endif
 </div>
 @endsection

@@ -1,29 +1,40 @@
-<x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Profile') }}
-        </h2>
-    </x-slot>
+@extends('layouts.app')
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
-            <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
-                <div class="max-w-xl">
-                    @include('profile.partials.update-profile-information-form')
-                </div>
+@section('title', 'Profile')
+@section('subtitle', 'Manage your account settings and profile information')
+
+@section('content')
+<div class="container" style="max-width: 800px;">
+    <div style="display: flex; flex-direction: column; gap: var(--space-6);">
+        <div class="card">
+            <div class="card-header">
+                <h2 class="text-lg font-bold text-primary">Profile Information</h2>
+                <p class="text-sm text-secondary" style="margin-top: var(--space-1);">Update your account's profile information and email address.</p>
             </div>
-
-            <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
-                <div class="max-w-xl">
-                    @include('profile.partials.update-password-form')
-                </div>
+            <div class="card-body">
+                @include('profile.partials.update-profile-information-form')
             </div>
+        </div>
 
-            <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
-                <div class="max-w-xl">
-                    @include('profile.partials.delete-user-form')
-                </div>
+        <div class="card">
+            <div class="card-header">
+                <h2 class="text-lg font-bold text-primary">Update Password</h2>
+                <p class="text-sm text-secondary" style="margin-top: var(--space-1);">Ensure your account is using a long, random password to stay secure.</p>
+            </div>
+            <div class="card-body">
+                @include('profile.partials.update-password-form')
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <h2 class="text-lg font-bold text-primary">Delete Account</h2>
+                <p class="text-sm text-secondary" style="margin-top: var(--space-1);">Once your account is deleted, all of its resources and data will be permanently deleted.</p>
+            </div>
+            <div class="card-body">
+                @include('profile.partials.delete-user-form')
             </div>
         </div>
     </div>
-</x-app-layout>
+</div>
+@endsection

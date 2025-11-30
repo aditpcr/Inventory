@@ -8,10 +8,35 @@ use Illuminate\Http\Request;
 
 class MenuItemController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $menuItems = MenuItem::with('ingredients')->get();
-        return view('supervisor.menu-items.index', compact('menuItems'));
+        $query = MenuItem::with('ingredients');
+
+        // Filter by name
+        if ($request->filled('name')) {
+            $query->where('name', 'like', '%' . $request->name . '%');
+        }
+
+        // Filter by price range
+        if ($request->filled('price_min')) {
+            $query->where('price', '>=', $request->price_min);
+        }
+        if ($request->filled('price_max')) {
+            $query->where('price', '<=', $request->price_max);
+        }
+
+        // Filter by availability
+        if ($request->filled('available')) {
+            $query->where('available', $request->available === '1');
+        }
+
+        // Get all menu items for stats (before pagination)
+        $allMenuItems = MenuItem::with('ingredients')->get();
+
+        // Paginate results
+        $menuItems = $query->orderBy('name')->paginate(10)->withQueryString();
+
+        return view('supervisor.menu-items.index', compact('menuItems', 'allMenuItems'));
     }
 
     public function create()

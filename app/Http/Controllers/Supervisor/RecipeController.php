@@ -11,7 +11,11 @@ class RecipeController extends Controller
 {
     public function index()
     {
-        $menuItems = MenuItem::with('menuItemIngredients.ingredient')->get();
+        // Paginate menu items - 2 per page
+        $menuItems = MenuItem::with('menuItemIngredients.ingredient')
+            ->orderBy('name')
+            ->paginate(2);
+        
         return view('supervisor.recipes.index', compact('menuItems'));
     }
 

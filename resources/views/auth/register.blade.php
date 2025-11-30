@@ -1,52 +1,56 @@
 <x-guest-layout>
-    <form method="POST" action="{{ route('register') }}">
+    <div class="text-center mb-space-6">
+        <h2 class="text-2xl font-bold text-primary mb-space-2"><i class="fas fa-user-plus" style="margin-right: var(--space-2);"></i>Create Account</h2>
+        <p class="text-sm text-secondary">Register for a new account</p>
+    </div>
+
+    <form method="POST" action="{{ route('register') }}" style="display: flex; flex-direction: column; gap: var(--space-4);">
         @csrf
 
         <!-- Name -->
         <div>
-            <x-input-label for="name" :value="__('Name')" />
-            <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus autocomplete="name" />
-            <x-input-error :messages="$errors->get('name')" class="mt-2" />
+            <label for="name" class="form-label">{{ __('Name') }}</label>
+            <input id="name" class="form-input" type="text" name="name" value="{{ old('name') }}" required autofocus autocomplete="name" />
+            @error('name')
+                <p class="text-sm" style="color: #dc3545; margin-top: var(--space-2);">{{ $message }}</p>
+            @enderror
         </div>
 
         <!-- Email Address -->
-        <div class="mt-4">
-            <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autocomplete="username" />
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
+        <div>
+            <label for="email" class="form-label">{{ __('Email') }}</label>
+            <input id="email" class="form-input" type="email" name="email" value="{{ old('email') }}" required autocomplete="username" />
+            @error('email')
+                <p class="text-sm" style="color: #dc3545; margin-top: var(--space-2);">{{ $message }}</p>
+            @enderror
         </div>
 
         <!-- Password -->
-        <div class="mt-4">
-            <x-input-label for="password" :value="__('Password')" />
-
-            <x-text-input id="password" class="block mt-1 w-full"
-                            type="password"
-                            name="password"
-                            required autocomplete="new-password" />
-
-            <x-input-error :messages="$errors->get('password')" class="mt-2" />
+        <div>
+            <label for="password" class="form-label">{{ __('Password') }}</label>
+            <input id="password" class="form-input" type="password" name="password" required autocomplete="new-password" />
+            @error('password')
+                <p class="text-sm" style="color: #dc3545; margin-top: var(--space-2);">{{ $message }}</p>
+            @enderror
         </div>
 
         <!-- Confirm Password -->
-        <div class="mt-4">
-            <x-input-label for="password_confirmation" :value="__('Confirm Password')" />
-
-            <x-text-input id="password_confirmation" class="block mt-1 w-full"
-                            type="password"
-                            name="password_confirmation" required autocomplete="new-password" />
-
-            <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
+        <div>
+            <label for="password_confirmation" class="form-label">{{ __('Confirm Password') }}</label>
+            <input id="password_confirmation" class="form-input" type="password" name="password_confirmation" required autocomplete="new-password" />
+            @error('password_confirmation')
+                <p class="text-sm" style="color: #dc3545; margin-top: var(--space-2);">{{ $message }}</p>
+            @enderror
         </div>
 
-        <div class="flex items-center justify-end mt-4">
-            <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('login') }}">
+        <div class="flex items-center justify-end" style="margin-top: var(--space-4); gap: var(--space-4);">
+            <a class="text-sm text-accent hover:text-primary underline" href="{{ route('login') }}">
                 {{ __('Already registered?') }}
             </a>
 
-            <x-primary-button class="ms-4">
+            <button type="submit" class="btn btn-primary">
                 {{ __('Register') }}
-            </x-primary-button>
+            </button>
         </div>
     </form>
 </x-guest-layout>

@@ -4,169 +4,179 @@
 @section('subtitle', 'Process customer orders efficiently')
 
 @section('breadcrumbs')
-<div class="flex items-center space-x-2 text-sm">
-    <span class="text-gray-500 font-medium">Point of Sale</span>
+<div class="flex items-center" style="gap: var(--space-2); font-size: var(--text-sm);">
+    <span class="text-secondary font-medium">Point of Sale</span>
 </div>
 @endsection
 
 @section('content')
-<div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-    <!-- Menu Items Section -->
-    <div class="lg:col-span-2">
-        <div class="bg-white rounded-2xl shadow-lg border border-gray-200/60 backdrop-blur-sm bg-white/90">
-            <div class="px-6 py-5 border-b border-gray-200/60">
-                <div class="flex items-center space-x-3">
-                    <div class="w-10 h-10 bg-gradient-to-br from-green-500 to-emerald-500 rounded-xl flex items-center justify-center shadow-lg">
-                        <i class="fas fa-utensils text-white text-lg"></i>
-                    </div>
-                    <div>
-                        <h2 class="text-xl font-bold text-gray-900">Menu Items</h2>
-                        <p class="text-sm text-gray-600">Select items to add to order</p>
+<div class="container">
+    <div class="grid" style="grid-template-columns: 1fr; gap: var(--space-6);">
+        <!-- Menu Items Section -->
+        <div style="grid-column: 1 / -1;">
+            <div class="card">
+                <div class="card-header">
+                    <div class="flex items-center" style="gap: var(--space-3);">
+                        <div style="width: 40px; height: 40px; background: #28a745; border-radius: var(--radius-lg); display: flex; align-items: center; justify-content: center; box-shadow: var(--shadow-base);">
+                            <i class="fas fa-utensils" style="color: white; font-size: var(--text-lg);"></i>
+                        </div>
+                        <div>
+                            <h2 class="text-xl font-bold text-primary">Menu Items</h2>
+                            <p class="text-sm text-secondary">Select items to add to order</p>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="p-6">
-                <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
-                    @foreach($menuItems as $menuItem)
-                    @php
-                        $canBeMade = $menuItem->canBeMade();
-                    @endphp
-                    <div class="bg-gradient-to-br from-white to-gray-50 rounded-xl border border-gray-200/60 hover:shadow-lg transition-all duration-300 hover:scale-105 group">
-                        <div class="p-4">
-                            <div class="flex items-start justify-between mb-3">
-                                <h3 class="font-bold text-gray-900 text-lg group-hover:text-green-600 transition-colors">
-                                    {{ $menuItem->name }}
-                                </h3>
-                                <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-bold {{ $canBeMade ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800' }}">
-                                    <i class="fas {{ $canBeMade ? 'fa-check-circle' : 'fa-times-circle' }} mr-1"></i>
-                                    {{ $canBeMade ? 'In Stock' : 'Out of Stock' }}
-                                </span>
+                <div class="card-body">
+                    <div class="grid" style="grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: var(--space-4);">
+                        @foreach($menuItems as $menuItem)
+                        @php
+                            $canBeMade = $menuItem->canBeMade();
+                        @endphp
+                        <div class="card" style="background: var(--background-light); border-color: var(--border-light); transition: all var(--transition-base);">
+                            <div class="card-body">
+                                <div class="flex items-start justify-between" style="margin-bottom: var(--space-3);">
+                                    <h3 class="font-bold text-primary" style="font-size: var(--text-lg);">
+                                        {{ $menuItem->name }}
+                                    </h3>
+                                    <span class="badge {{ $canBeMade ? 'badge-success' : 'badge-danger' }}">
+                                        <i class="fas {{ $canBeMade ? 'fa-check-circle' : 'fa-times-circle' }}" style="margin-right: var(--space-1);"></i>
+                                        {{ $canBeMade ? 'In Stock' : 'Out of Stock' }}
+                                    </span>
+                                </div>
+                                
+                                <p class="text-2xl font-bold text-accent" style="margin-bottom: var(--space-4);">
+                                    Rp {{ number_format($menuItem->price, 0, ',', '.') }}
+                                </p>
+                                
+                                <button class="btn btn-primary w-full add-to-order"
+                                        data-menu-item-id="{{ $menuItem->id }}"
+                                        data-menu-item-name="{{ $menuItem->name }}"
+                                        data-menu-item-price="{{ $menuItem->price }}"
+                                        {{ !$canBeMade ? 'disabled' : '' }}
+                                        style="background: {{ $canBeMade ? '#28a745' : 'var(--background-light)' }}; color: {{ $canBeMade ? 'white' : 'var(--text-light)' }}; border: none; opacity: {{ $canBeMade ? '1' : '0.5' }}; cursor: {{ $canBeMade ? 'pointer' : 'not-allowed' }};">
+                                    <i class="fas fa-plus" style="margin-right: var(--space-2);"></i>
+                                    Add to Order
+                                </button>
                             </div>
-                            
-                            <p class="text-2xl font-black text-green-600 mb-4">
-                                Rp {{ number_format($menuItem->price, 0, ',', '.') }}
-                            </p>
-                            
-                            <button class="w-full flex items-center justify-center px-4 py-3 bg-gradient-to-r from-green-500 to-emerald-500 text-white rounded-xl font-bold hover:shadow-lg transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed group/add-btn add-to-order"
-                                    data-menu-item-id="{{ $menuItem->id }}"
-                                    data-menu-item-name="{{ $menuItem->name }}"
-                                    data-menu-item-price="{{ $menuItem->price }}"
-                                    {{ !$canBeMade ? 'disabled' : '' }}>
-                                <i class="fas fa-plus mr-2"></i>
-                                Add to Order
-                                <i class="fas fa-arrow-right ml-2 transform group-hover/add-btn:translate-x-1 transition-transform"></i>
-                            </button>
                         </div>
+                        @endforeach
                     </div>
-                    @endforeach
                 </div>
             </div>
         </div>
-    </div>
 
-    <!-- Current Order Section -->
-    <div class="space-y-6">
-        <!-- Order Summary -->
-        <div class="bg-white rounded-2xl shadow-lg border border-gray-200/60 backdrop-blur-sm bg-white/90">
-            <div class="px-6 py-5 border-b border-gray-200/60">
-                <div class="flex items-center space-x-3">
-                    <div class="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-500 rounded-xl flex items-center justify-center shadow-lg">
-                        <i class="fas fa-receipt text-white text-lg"></i>
-                    </div>
-                    <div>
-                        <h2 class="text-xl font-bold text-gray-900">Current Order</h2>
-                        <p class="text-sm text-gray-600">Order summary and total</p>
+        <!-- Current Order Section -->
+        <div style="display: flex; flex-direction: column; gap: var(--space-6);">
+            <!-- Order Summary -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="flex items-center" style="gap: var(--space-3);">
+                        <div style="width: 40px; height: 40px; background: var(--accent-color); border-radius: var(--radius-lg); display: flex; align-items: center; justify-content: center; box-shadow: var(--shadow-base);">
+                            <i class="fas fa-receipt" style="color: var(--primary-dark); font-size: var(--text-lg);"></i>
+                        </div>
+                        <div>
+                            <h2 class="text-xl font-bold text-primary">Current Order</h2>
+                            <p class="text-sm text-secondary">Order summary and total</p>
+                        </div>
                     </div>
                 </div>
-            </div>
-            
-            <form id="order-form" action="{{ route('employee.pos.store') }}" method="POST" class="p-6">
-                @csrf
                 
-                <!-- Order Items -->
-                <div id="order-items" class="space-y-3 max-h-96 overflow-y-auto mb-6">
-                    <!-- Order items will be added here dynamically -->
-                    <div id="empty-order" class="text-center py-8">
-                        <div class="w-16 h-16 bg-gray-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
-                            <i class="fas fa-shopping-cart text-gray-400 text-2xl"></i>
-                        </div>
-                        <h4 class="text-lg font-semibold text-gray-900 mb-2">No items added</h4>
-                        <p class="text-gray-600">Select items from the menu to start an order</p>
-                    </div>
-                </div>
-
-                <!-- Order Total -->
-                <div class="border-t border-gray-200 pt-4 mb-6">
-                    <div class="flex justify-between items-center mb-2">
-                        <span class="text-lg font-semibold text-gray-700">Subtotal:</span>
-                        <span class="text-lg font-bold text-gray-900" id="subtotal-amount">Rp 0</span>
-                    </div>
-                    <div class="flex justify-between items-center mb-2">
-                        <span class="text-lg font-semibold text-gray-700">Tax (10%):</span>
-                        <span class="text-lg font-bold text-gray-900" id="tax-amount">Rp 0</span>
-                    </div>
-                    <div class="flex justify-between items-center border-t border-gray-200 pt-2">
-                        <span class="text-xl font-bold text-gray-900">Total:</span>
-                        <span class="text-2xl font-black text-green-600" id="total-amount">Rp 0</span>
-                    </div>
-                </div>
-
-                <!-- Action Buttons -->
-                <div class="space-y-3">
-                    <button type="submit" 
-                            class="w-full flex items-center justify-center px-6 py-4 bg-gradient-to-r from-green-500 to-emerald-500 text-white rounded-xl font-bold hover:shadow-lg transition-all duration-200 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed"
-                            id="submit-order"
-                            disabled>
-                        <i class="fas fa-check-circle mr-2"></i>
-                        Place Order
-                        <i class="fas fa-arrow-right ml-2"></i>
-                    </button>
+                <form id="order-form" action="{{ route('employee.pos.store') }}" method="POST" class="card-body">
+                    @csrf
                     
-                    <button type="button" 
-                            id="clear-order"
-                            class="w-full flex items-center justify-center px-6 py-3 border border-gray-300 text-gray-700 rounded-xl font-semibold hover:bg-gray-50 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
-                            disabled>
-                        <i class="fas fa-trash mr-2"></i>
-                        Clear Order
-                    </button>
-                </div>
-            </form>
-        </div>
+                    <!-- Order Items -->
+                    <div id="order-items" style="max-height: 384px; overflow-y: auto; margin-bottom: var(--space-6); display: flex; flex-direction: column; gap: var(--space-3);">
+                        <!-- Order items will be added here dynamically -->
+                        <div id="empty-order" class="text-center" style="padding: var(--space-8);">
+                            <div style="width: 64px; height: 64px; background: var(--background-light); border-radius: var(--radius-xl); display: flex; align-items: center; justify-content: center; margin: 0 auto var(--space-4); box-shadow: var(--shadow-base);">
+                                <i class="fas fa-shopping-cart" style="color: var(--text-light); font-size: var(--text-2xl);"></i>
+                            </div>
+                            <h4 class="text-lg font-medium text-primary" style="margin-bottom: var(--space-2);">No items added</h4>
+                            <p class="text-secondary">Select items from the menu to start an order</p>
+                        </div>
+                    </div>
 
-        <!-- Quick Stats -->
-        <div class="bg-white rounded-2xl shadow-lg border border-gray-200/60 backdrop-blur-sm bg-white/90">
-            <div class="px-6 py-5 border-b border-gray-200/60">
-                <h3 class="text-lg font-bold text-gray-900">Quick Stats</h3>
+                    <!-- Order Total -->
+                    <div style="border-top: 1px solid var(--border-light); padding-top: var(--space-4); margin-bottom: var(--space-6);">
+                        <div class="flex justify-between items-center" style="margin-bottom: var(--space-2);">
+                            <span class="text-lg font-medium text-secondary">Subtotal:</span>
+                            <span class="text-lg font-bold text-primary" id="subtotal-amount">Rp 0</span>
+                        </div>
+                        <div class="flex justify-between items-center" style="margin-bottom: var(--space-2);">
+                            <span class="text-lg font-medium text-secondary">Tax (10%):</span>
+                            <span class="text-lg font-bold text-primary" id="tax-amount">Rp 0</span>
+                        </div>
+                        <div class="flex justify-between items-center" style="border-top: 1px solid var(--border-light); padding-top: var(--space-2);">
+                            <span class="text-xl font-bold text-primary">Total:</span>
+                            <span class="text-2xl font-bold text-accent" id="total-amount">Rp 0</span>
+                        </div>
+                    </div>
+
+                    <!-- Action Buttons -->
+                    <div style="display: flex; flex-direction: column; gap: var(--space-3);">
+                        <button type="submit" 
+                                class="btn btn-primary w-full"
+                                id="submit-order"
+                                disabled
+                                style="background: #28a745; color: white; border: none;">
+                            <i class="fas fa-check-circle" style="margin-right: var(--space-2);"></i>
+                            Place Order
+                            <i class="fas fa-arrow-right" style="margin-left: var(--space-2);"></i>
+                        </button>
+                        
+                        <button type="button" 
+                                id="clear-order"
+                                class="btn btn-outline w-full"
+                                disabled>
+                            <i class="fas fa-trash" style="margin-right: var(--space-2);"></i>
+                            Clear Order
+                        </button>
+                    </div>
+                </form>
             </div>
-            <div class="p-6 space-y-4">
-                @php
-                    $availableItems = 0;
-                    $outOfStockItems = 0;
-                    foreach($menuItems as $menuItem) {
-                        if ($menuItem->canBeMade()) {
-                            $availableItems++;
-                        } else {
-                            $outOfStockItems++;
+
+            <!-- Quick Stats -->
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="text-lg font-bold text-primary">Quick Stats</h3>
+                </div>
+                <div class="card-body" style="display: flex; flex-direction: column; gap: var(--space-4);">
+                    @php
+                        $availableItems = 0;
+                        $outOfStockItems = 0;
+                        foreach($menuItems as $menuItem) {
+                            if ($menuItem->canBeMade()) {
+                                $availableItems++;
+                            } else {
+                                $outOfStockItems++;
+                            }
                         }
-                    }
-                @endphp
-                <div class="flex justify-between items-center">
-                    <span class="text-gray-600">Available Items:</span>
-                    <span class="font-bold text-green-600">{{ $availableItems }}</span>
-                </div>
-                <div class="flex justify-between items-center">
-                    <span class="text-gray-600">Out of Stock:</span>
-                    <span class="font-bold text-red-600">{{ $outOfStockItems }}</span>
-                </div>
-                <div class="flex justify-between items-center">
-                    <span class="text-gray-600">Total Items:</span>
-                    <span class="font-bold text-gray-900">{{ $menuItems->count() }}</span>
+                    @endphp
+                    <div class="flex justify-between items-center">
+                        <span class="text-secondary">Available Items:</span>
+                        <span class="font-bold" style="color: #28a745;">{{ $availableItems }}</span>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <span class="text-secondary">Out of Stock:</span>
+                        <span class="font-bold" style="color: #dc3545;">{{ $outOfStockItems }}</span>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <span class="text-secondary">Total Items:</span>
+                        <span class="font-bold text-primary">{{ $menuItems->count() }}</span>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-@endsection
+
+<style>
+    @media (min-width: 1024px) {
+        .container > .grid {
+            grid-template-columns: 2fr 1fr;
+        }
+    }
+</style>
 
 @push('scripts')
 <script>
@@ -196,36 +206,40 @@ function updateOrderDisplay() {
     // Update order items display
     if (orderItems.length === 0) {
         orderItemsContainer.innerHTML = `
-            <div id="empty-order" class="text-center py-8">
-                <div class="w-16 h-16 bg-gray-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
-                    <i class="fas fa-shopping-cart text-gray-400 text-2xl"></i>
+            <div id="empty-order" class="text-center" style="padding: var(--space-8);">
+                <div style="width: 64px; height: 64px; background: var(--background-light); border-radius: var(--radius-xl); display: flex; align-items: center; justify-content: center; margin: 0 auto var(--space-4); box-shadow: var(--shadow-base);">
+                    <i class="fas fa-shopping-cart" style="color: var(--text-light); font-size: var(--text-2xl);"></i>
                 </div>
-                <h4 class="text-lg font-semibold text-gray-900 mb-2">No items added</h4>
-                <p class="text-gray-600">Select items from the menu to start an order</p>
+                <h4 class="text-lg font-medium text-primary" style="margin-bottom: var(--space-2);">No items added</h4>
+                <p class="text-secondary">Select items from the menu to start an order</p>
             </div>
         `;
         submitButton.disabled = true;
         clearButton.disabled = true;
     } else {
         orderItemsContainer.innerHTML = orderItems.map((item, index) => `
-            <div class="flex items-center justify-between p-4 bg-gradient-to-r from-gray-50 to-gray-100 rounded-xl border border-gray-200">
-                <div class="flex-1">
-                    <h4 class="font-bold text-gray-900">${item.name}</h4>
-                    <p class="text-sm text-gray-600">Rp ${item.price.toLocaleString('id-ID')} × ${item.quantity}</p>
-                </div>
-                <div class="flex items-center space-x-3">
-                    <span class="font-bold text-green-600">Rp ${(item.price * item.quantity).toLocaleString('id-ID')}</span>
-                    <div class="flex items-center space-x-2">
-                        <button type="button" class="quantity-btn decrease-quantity w-8 h-8 bg-red-500 text-white rounded-lg flex items-center justify-center hover:bg-red-600 transition-colors" data-index="${index}">
-                            <i class="fas fa-minus text-xs"></i>
-                        </button>
-                        <span class="quantity-display w-8 text-center font-bold">${item.quantity}</span>
-                        <button type="button" class="quantity-btn increase-quantity w-8 h-8 bg-green-500 text-white rounded-lg flex items-center justify-center hover:bg-green-600 transition-colors" data-index="${index}">
-                            <i class="fas fa-plus text-xs"></i>
-                        </button>
-                        <button type="button" class="remove-item w-8 h-8 bg-red-500 text-white rounded-lg flex items-center justify-center hover:bg-red-600 transition-colors" data-index="${index}">
-                            <i class="fas fa-trash text-xs"></i>
-                        </button>
+            <div class="card" style="background: var(--background-light); border-color: var(--border-light);">
+                <div class="card-body">
+                    <div class="flex items-center justify-between">
+                        <div style="flex: 1;">
+                            <h4 class="font-bold text-primary">${item.name}</h4>
+                            <p class="text-sm text-secondary">Rp ${item.price.toLocaleString('id-ID')} × ${item.quantity}</p>
+                        </div>
+                        <div class="flex items-center" style="gap: var(--space-3);">
+                            <span class="font-bold text-accent">Rp ${(item.price * item.quantity).toLocaleString('id-ID')}</span>
+                            <div class="flex items-center" style="gap: var(--space-2);">
+                                <button type="button" class="quantity-btn decrease-quantity btn" style="width: 32px; height: 32px; padding: 0; background: #dc3545; color: white; border: none;" data-index="${index}">
+                                    <i class="fas fa-minus" style="font-size: var(--text-xs);"></i>
+                                </button>
+                                <span class="quantity-display" style="width: 32px; text-align: center; font-weight: var(--font-weight-bold);">${item.quantity}</span>
+                                <button type="button" class="quantity-btn increase-quantity btn" style="width: 32px; height: 32px; padding: 0; background: #28a745; color: white; border: none;" data-index="${index}">
+                                    <i class="fas fa-plus" style="font-size: var(--text-xs);"></i>
+                                </button>
+                                <button type="button" class="remove-item btn" style="width: 32px; height: 32px; padding: 0; background: #dc3545; color: white; border: none;" data-index="${index}">
+                                    <i class="fas fa-trash" style="font-size: var(--text-xs);"></i>
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -307,10 +321,10 @@ document.querySelectorAll('.add-to-order').forEach(button => {
         updateOrderDisplay();
 
         // Add visual feedback
-        const originalBg = this.style.backgroundImage;
-        this.style.backgroundImage = 'linear-gradient(to right, #059669, #065f46)';
+        const originalBg = this.style.background;
+        this.style.background = '#059669';
         setTimeout(() => {
-            this.style.backgroundImage = originalBg;
+            this.style.background = originalBg;
         }, 300);
     });
 });
@@ -333,7 +347,7 @@ document.getElementById('order-form').addEventListener('submit', function(e) {
     
     // Add loading state
     const submitButton = document.getElementById('submit-order');
-    submitButton.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Processing...';
+    submitButton.innerHTML = '<i class="fas fa-spinner fa-spin" style="margin-right: var(--space-2);"></i>Processing...';
     submitButton.disabled = true;
 });
 
@@ -341,3 +355,4 @@ document.getElementById('order-form').addEventListener('submit', function(e) {
 updateOrderDisplay();
 </script>
 @endpush
+@endsection

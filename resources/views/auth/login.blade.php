@@ -4,60 +4,37 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login - Restaurant Management System</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Davis Design System CSS -->
+    <link rel="stylesheet" href="{{ asset('css/davis-design-system.css') }}">
+    
+    <!-- Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
     <style>
-        :root {
-            --primary: #4a6cf7;
-            --primary-dark: #3a5ae0;
-            --secondary: #6c757d;
-            --success: #28a745;
-            --danger: #dc3545;
-            --light: #f8f9fa;
-            --dark: #343a40;
-            --gradient-start: #667eea;
-            --gradient-end: #764ba2;
-        }
-        
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
         body {
-            background: linear-gradient(135deg, var(--gradient-start) 0%, var(--gradient-end) 100%);
+            background: var(--primary-dark);
+            background-image: 
+                radial-gradient(circle at 1px 1px, rgba(255, 255, 255, 0.15) 1px, transparent 0);
+            background-size: 20px 20px;
             min-height: 100vh;
             display: flex;
             align-items: center;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            position: relative;
-            overflow-x: hidden;
-        }
-        
-        body::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiPjxkZWZzPjxwYXR0ZXJuIGlkPSJwYXR0ZXJuIiB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHBhdHRlcm5Vbml0cz0idXNlclNwYWNlT25Vc2UiIHBhdHRlcm5UcmFuc2Zvcm09InJvdGF0ZSg0NSkiPjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIyMCIgaGVpZ2h0PSIyMCIgZmlsbD0icmdiYSgyNTUsMjU1LDI1NSwwLjA1KSIvPjwvcGF0dGVybj48L2RlZnM+PHJlY3QgZmlsbD0idXJsKCNwYXR0ZXJuKSIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIvPjwvc3ZnPg==');
-            opacity: 0.3;
-            z-index: -1;
+            justify-content: center;
+            padding: var(--space-4);
         }
         
         .login-container {
             width: 100%;
             max-width: 1200px;
             margin: 0 auto;
-            padding: 20px;
         }
         
         .login-card {
-            background: white;
-            border-radius: 16px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+            background: var(--background-card);
+            border: 1px solid var(--border-light);
+            border-radius: var(--radius-xl);
+            box-shadow: var(--shadow-lg);
             overflow: hidden;
             display: flex;
             min-height: 600px;
@@ -65,25 +42,15 @@
         
         .login-illustration {
             flex: 1;
-            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            background: var(--accent-color);
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            padding: 40px;
-            color: white;
+            padding: var(--space-8);
+            color: var(--primary-dark);
             position: relative;
             overflow: hidden;
-        }
-        
-        .login-illustration::before {
-            content: '';
-            position: absolute;
-            width: 200%;
-            height: 200%;
-            background: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiPjxkZWZzPjxwYXR0ZXJuIGlkPSJwYXR0ZXJuIiB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHBhdHRlcm5Vbml0cz0idXNlclNwYWNlT25Vc2UiIHBhdHRlcm5UcmFuc2Zvcm09InJvdGF0ZSg0NSkiPjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIyMCIgaGVpZ2h0PSIyMCIgZmlsbD0icmdiYSgyNTUsMjU1LDI1NSwwLjA3KSIvPjwvcGF0dGVybj48L2RlZnM+PHJlY3QgZmlsbD0idXJsKCNwYXR0ZXJuKSIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIvPjwvc3ZnPg==');
-            opacity: 0.3;
-            z-index: 1;
         }
         
         .illustration-content {
@@ -93,150 +60,126 @@
         }
         
         .illustration-content h3 {
-            font-weight: 700;
-            margin-bottom: 20px;
-            font-size: 28px;
+            font-weight: var(--font-weight-bold);
+            margin-bottom: var(--space-4);
+            font-size: var(--text-2xl);
         }
         
         .illustration-content p {
-            font-size: 16px;
+            font-size: var(--text-base);
             opacity: 0.9;
-            margin-bottom: 30px;
+            margin-bottom: var(--space-6);
         }
         
         .illustration-img {
             width: 80%;
             max-width: 300px;
-            margin: 0 auto 30px;
+            margin: 0 auto var(--space-6);
             filter: drop-shadow(0 10px 20px rgba(0,0,0,0.2));
         }
         
         .login-form {
             flex: 1;
-            padding: 50px 40px;
+            padding: var(--space-10) var(--space-8);
             display: flex;
             flex-direction: column;
             justify-content: center;
+            background: var(--background-card);
         }
         
         .logo {
             text-align: center;
-            margin-bottom: 30px;
+            margin-bottom: var(--space-6);
         }
         
         .logo h2 {
-            color: var(--primary);
-            font-weight: 700;
-            margin-bottom: 5px;
+            color: var(--accent-color);
+            font-weight: var(--font-weight-bold);
+            margin-bottom: var(--space-1);
+            font-size: var(--text-2xl);
         }
         
         .logo p {
-            color: var(--secondary);
-            font-size: 16px;
+            color: var(--text-secondary);
+            font-size: var(--text-base);
         }
         
         .form-group {
-            margin-bottom: 20px;
+            margin-bottom: var(--space-4);
             position: relative;
         }
         
         .form-label {
-            font-weight: 600;
-            margin-bottom: 8px;
-            color: var(--dark);
+            font-weight: var(--font-weight-medium);
+            margin-bottom: var(--space-2);
+            color: var(--text-primary);
+            display: block;
         }
         
         .form-control {
-            padding: 12px 15px;
-            border-radius: 8px;
-            border: 2px solid #e9ecef;
-            transition: all 0.3s;
-            font-size: 16px;
+            padding: var(--space-3) var(--space-4);
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-light);
+            transition: all var(--transition-fast);
+            font-size: var(--text-base);
+            width: 100%;
         }
         
         .form-control:focus {
-            border-color: var(--primary);
-            box-shadow: 0 0 0 0.2rem rgba(74, 108, 247, 0.25);
+            outline: none;
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 3px rgba(58, 134, 255, 0.1);
         }
         
         .input-icon {
             position: absolute;
-            right: 15px;
+            right: var(--space-4);
             top: 42px;
-            color: var(--secondary);
-        }
-        
-        .password-toggle {
+            color: var(--text-secondary);
             cursor: pointer;
-            transition: color 0.3s;
-        }
-        
-        .password-toggle:hover {
-            color: var(--primary);
         }
         
         .remember-forgot {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 20px;
-        }
-        
-        .form-check-input:checked {
-            background-color: var(--primary);
-            border-color: var(--primary);
+            margin-bottom: var(--space-4);
         }
         
         .forgot-link {
-            color: var(--primary);
+            color: var(--accent-color);
             text-decoration: none;
-            font-weight: 500;
-            transition: color 0.3s;
+            font-weight: var(--font-weight-medium);
+            transition: color var(--transition-fast);
+            font-size: var(--text-sm);
         }
         
         .forgot-link:hover {
-            color: var(--primary-dark);
-            text-decoration: underline;
-        }
-        
-        .btn-login {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
-            border: none;
-            color: white;
-            padding: 12px;
-            border-radius: 8px;
-            font-weight: 600;
-            font-size: 16px;
-            transition: all 0.3s;
-            box-shadow: 0 4px 15px rgba(74, 108, 247, 0.3);
-        }
-        
-        .btn-login:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(74, 108, 247, 0.4);
-        }
-        
-        .btn-login:active {
-            transform: translateY(0);
+            color: var(--text-primary);
         }
         
         .test-accounts {
-            margin-top: 30px;
-            background-color: #f8f9fa;
-            border-radius: 8px;
-            padding: 20px;
+            margin-top: var(--space-6);
+            background-color: var(--background-light);
+            border: 1px solid var(--border-light);
+            border-radius: var(--radius-md);
+            padding: var(--space-4);
         }
         
         .test-accounts h6 {
-            color: var(--dark);
-            margin-bottom: 15px;
-            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: var(--space-4);
+            font-weight: var(--font-weight-medium);
+            font-size: var(--text-sm);
         }
         
         .account-role {
-            margin-bottom: 10px;
-            padding-bottom: 10px;
-            border-bottom: 1px solid #e9ecef;
+            margin-bottom: var(--space-2);
+            padding-bottom: var(--space-2);
+            border-bottom: 1px solid var(--border-light);
+            display: flex;
+            align-items: center;
+            gap: var(--space-2);
         }
         
         .account-role:last-child {
@@ -247,11 +190,10 @@
         
         .role-badge {
             display: inline-block;
-            padding: 4px 8px;
-            border-radius: 4px;
-            font-size: 12px;
-            font-weight: 600;
-            margin-right: 8px;
+            padding: var(--space-1) var(--space-2);
+            border-radius: var(--radius-base);
+            font-size: var(--text-xs);
+            font-weight: var(--font-weight-medium);
         }
         
         .badge-admin {
@@ -270,42 +212,44 @@
         }
         
         .account-details {
-            font-size: 14px;
-            color: var(--secondary);
+            font-size: var(--text-sm);
+            color: var(--text-secondary);
+            flex: 1;
         }
         
         .copy-btn {
             background: none;
             border: none;
-            color: var(--primary);
+            color: var(--accent-color);
             cursor: pointer;
-            margin-left: 5px;
-            transition: color 0.3s;
+            transition: color var(--transition-fast);
+            padding: var(--space-1);
         }
         
         .copy-btn:hover {
-            color: var(--primary-dark);
+            color: var(--text-primary);
         }
         
         .alert {
-            border-radius: 8px;
-            padding: 12px 15px;
+            border-radius: var(--radius-md);
+            padding: var(--space-3) var(--space-4);
+            margin-bottom: var(--space-4);
+            border: 1px solid;
         }
         
         .alert-danger {
             background-color: rgba(220, 53, 69, 0.1);
-            border-color: rgba(220, 53, 69, 0.2);
-            color: var(--danger);
+            border-color: rgba(220, 53, 69, 0.3);
+            color: #dc3545;
         }
         
-        /* Responsive styles */
         @media (max-width: 992px) {
             .login-card {
                 flex-direction: column;
             }
             
             .login-illustration {
-                padding: 30px 20px;
+                padding: var(--space-6) var(--space-4);
             }
             
             .illustration-img {
@@ -316,11 +260,11 @@
         
         @media (max-width: 576px) {
             .login-container {
-                padding: 10px;
+                padding: var(--space-2);
             }
             
             .login-form {
-                padding: 30px 20px;
+                padding: var(--space-6) var(--space-4);
             }
             
             .remember-forgot {
@@ -329,7 +273,7 @@
             }
             
             .forgot-link {
-                margin-top: 10px;
+                margin-top: var(--space-2);
             }
         }
     </style>
@@ -344,30 +288,24 @@
                         <path fill="#fff" d="M200,60 C245,60 280,95 280,140 C280,185 245,220 200,220 C155,220 120,185 120,140 C120,95 155,60 200,60 Z" opacity="0.2"/>
                         <path fill="#fff" d="M200,70 C240,70 270,100 270,140 C270,180 240,210 200,210 C160,210 130,180 130,140 C130,100 160,70 200,70 Z" opacity="0.3"/>
                         <rect x="170" y="100" width="60" height="120" rx="5" fill="#fff" opacity="0.8"/>
-                        <rect x="180" y="110" width="40" height="80" rx="3" fill="#4a6cf7"/>
+                        <rect x="180" y="110" width="40" height="80" rx="3" fill="#1a1a1a"/>
                         <circle cx="200" cy="210" r="10" fill="#fff" opacity="0.8"/>
                         <path fill="#fff" d="M120,250 L280,250 L280,260 L120,260 Z" opacity="0.6"/>
                         <path fill="#fff" d="M130,240 L270,240 L270,250 L130,250 Z" opacity="0.4"/>
                     </svg>
                     <h3>Welcome Back!</h3>
                     <p>Sign in to access your restaurant management dashboard and streamline your operations.</p>
-                    <div class="mt-4">
-                        <div class="d-flex justify-content-center">
-                            <div class="mx-2">
-                                <div class="bg-white rounded-circle p-3 shadow-sm d-inline-flex">
-                                    <i class="fas fa-utensils text-primary fa-lg"></i>
-                                </div>
-                            </div>
-                            <div class="mx-2">
-                                <div class="bg-white rounded-circle p-3 shadow-sm d-inline-flex">
-                                    <i class="fas fa-chart-bar text-primary fa-lg"></i>
-                                </div>
-                            </div>
-                            <div class="mx-2">
-                                <div class="bg-white rounded-circle p-3 shadow-sm d-inline-flex">
-                                    <i class="fas fa-users text-primary fa-lg"></i>
-                                </div>
-                            </div>
+                    <div style="margin-top: var(--space-4);">
+                        <div class="flex justify-center" style="gap: var(--space-4);">
+                        <div style="width: 48px; height: 48px; background: rgba(0, 0, 0, 0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                            <i class="fas fa-utensils" style="color: var(--primary-dark); font-size: var(--text-lg);"></i>
+                        </div>
+                        <div style="width: 48px; height: 48px; background: rgba(0, 0, 0, 0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                            <i class="fas fa-chart-bar" style="color: var(--primary-dark); font-size: var(--text-lg);"></i>
+                        </div>
+                        <div style="width: 48px; height: 48px; background: rgba(0, 0, 0, 0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                            <i class="fas fa-users" style="color: var(--primary-dark); font-size: var(--text-lg);"></i>
+                        </div>
                         </div>
                     </div>
                 </div>
@@ -375,14 +313,14 @@
             
             <div class="login-form">
                 <div class="logo">
-                    <h2><i class="fas fa-utensils me-2"></i>RestaurantPro</h2>
+                    <h2><i class="fas fa-utensils" style="margin-right: var(--space-2);"></i>RestaurantPro</h2>
                     <p>Management System</p>
                 </div>
 
                 @if($errors->any())
                     <div class="alert alert-danger">
                         @foreach($errors->all() as $error)
-                            <p class="mb-0"><i class="fas fa-exclamation-circle me-2"></i>{{ $error }}</p>
+                            <p style="margin: 0;"><i class="fas fa-exclamation-circle" style="margin-right: var(--space-2);"></i>{{ $error }}</p>
                         @endforeach
                     </div>
                 @endif
@@ -402,22 +340,22 @@
                     </div>
 
                     <div class="remember-forgot">
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="remember" name="remember">
-                            <label class="form-check-label" for="remember">
+                        <div style="display: flex; align-items: center; gap: var(--space-2);">
+                            <input type="checkbox" id="remember" name="remember" style="width: 16px; height: 16px; cursor: pointer;">
+                            <label for="remember" style="font-size: var(--text-sm); color: var(--text-primary); cursor: pointer;">
                                 Remember me
                             </label>
                         </div>
                         <a href="#" class="forgot-link">Forgot Password?</a>
                     </div>
 
-                    <button type="submit" class="btn btn-login w-100 mb-3">
-                        <i class="fas fa-sign-in-alt me-2"></i>Sign In
+                    <button type="submit" class="btn btn-primary w-full" style="margin-bottom: var(--space-4);">
+                        <i class="fas fa-sign-in-alt" style="margin-right: var(--space-2);"></i>Sign In
                     </button>
                 </form>
 
                 <div class="test-accounts">
-                    <h6><i class="fas fa-vial me-2"></i>Test Accounts</h6>
+                    <h6><i class="fas fa-vial" style="margin-right: var(--space-2);"></i>Test Accounts</h6>
                     
                     <div class="account-role">
                         <span class="role-badge badge-admin">Admin</span>
@@ -447,7 +385,6 @@
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         // Toggle password visibility
         document.getElementById('togglePassword').addEventListener('click', function() {

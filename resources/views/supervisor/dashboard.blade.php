@@ -1,49 +1,53 @@
 @extends('layouts.app')
 
 @section('title', 'Supervisor Dashboard')
-@section('subtitle', 'Monitor inventory and manage menu items efficiently')
+@section('subtitle', 'Monitor inventory and manage menu items efficiently with real-time insights')
 
 @section('content')
-<div class="max-w-7xl mx-auto px-6 py-8">
-
+<div class="container">
     <!-- Stats Cards -->
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+    <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: var(--space-6); margin-bottom: var(--space-8);">
         <!-- Total Menu Items -->
-        <div class="bg-white rounded-2xl shadow-lg border border-gray-200/60 p-6 backdrop-blur-sm bg-white/90 hover:shadow-xl transition-all duration-300">
-            <div class="flex items-center justify-between">
-                <div>
-                    <p class="text-gray-600 text-sm font-medium">Total Menu Items</p>
-                    <p class="text-4xl font-black text-gray-900 mt-2">{{ $menuItems }}</p>
-                </div>
-                <!-- Icon -->
-                <div class="w-14 h-14 bg-gradient-to-br from-blue-500 to-purple-500 rounded-2xl flex items-center justify-center shadow-lg">
-                    <i class="fas fa-utensils text-white text-xl"></i>
+        <div class="card">
+            <div class="card-body">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <h3 class="text-sm font-medium text-secondary" style="margin-bottom: var(--space-2); text-transform: uppercase; letter-spacing: 0.5px;">Total Menu Items</h3>
+                        <div class="text-3xl font-bold text-primary">{{ $menuItems }}</div>
+                    </div>
+                    <div style="width: 70px; height: 70px; border-radius: var(--radius-lg); display: flex; align-items: center; justify-content: center; font-size: var(--text-2xl); color: var(--primary-dark); background: var(--accent-color); box-shadow: var(--shadow-md);">
+                        <i class="fas fa-utensils"></i>
+                    </div>
                 </div>
             </div>
         </div>
 
         <!-- Total Ingredients -->
-        <div class="bg-white rounded-2xl shadow-lg border border-gray-200/60 p-6 backdrop-blur-sm bg-white/90 hover:shadow-xl transition-all duration-300">
-            <div class="flex items-center justify-between">
-                <div>
-                    <p class="text-gray-600 text-sm font-medium">Total Ingredients</p>
-                    <p class="text-4xl font-black text-gray-900 mt-2">{{ $ingredients }}</p>
-                </div>
-                <div class="w-14 h-14 bg-gradient-to-br from-green-500 to-emerald-500 rounded-2xl flex items-center justify-center shadow-lg">
-                    <i class="fas fa-boxes text-white text-xl"></i>
+        <div class="card">
+            <div class="card-body">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <h3 class="text-sm font-medium text-secondary" style="margin-bottom: var(--space-2); text-transform: uppercase; letter-spacing: 0.5px;">Total Ingredients</h3>
+                        <div class="text-3xl font-bold text-primary">{{ $ingredients }}</div>
+                    </div>
+                    <div style="width: 70px; height: 70px; border-radius: var(--radius-lg); display: flex; align-items: center; justify-content: center; font-size: var(--text-2xl); color: white; background: #28a745; box-shadow: var(--shadow-md);">
+                        <i class="fas fa-boxes"></i>
+                    </div>
                 </div>
             </div>
         </div>
 
         <!-- Low Stock -->
-        <div class="bg-white rounded-2xl shadow-lg border border-gray-200/60 p-6 backdrop-blur-sm bg-white/90 hover:shadow-xl transition-all duration-300">
-            <div class="flex items-center justify-between">
-                <div>
-                    <p class="text-gray-600 text-sm font-medium">Low Stock Items</p>
-                    <p class="text-4xl font-black text-gray-900 mt-2">{{ $lowStockIngredients->count() }}</p>
-                </div>
-                <div class="w-14 h-14 bg-gradient-to-br from-orange-500 to-red-500 rounded-2xl flex items-center justify-center shadow-lg">
-                    <i class="fas fa-exclamation-triangle text-white text-xl"></i>
+        <div class="card">
+            <div class="card-body">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <h3 class="text-sm font-medium text-secondary" style="margin-bottom: var(--space-2); text-transform: uppercase; letter-spacing: 0.5px;">Low Stock Items</h3>
+                        <div class="text-3xl font-bold text-primary">{{ $lowStockIngredients->count() }}</div>
+                    </div>
+                    <div style="width: 70px; height: 70px; border-radius: var(--radius-lg); display: flex; align-items: center; justify-content: center; font-size: var(--text-2xl); color: white; background: #f59e0b; box-shadow: var(--shadow-md);">
+                        <i class="fas fa-exclamation-triangle"></i>
+                    </div>
                 </div>
             </div>
         </div>
@@ -51,165 +55,188 @@
 
     <!-- Low Stock Alerts -->
     @if($lowStockIngredients->count() > 0)
-    <div class="bg-white rounded-2xl shadow-lg border border-orange-200 mb-8 backdrop-blur-sm bg-white/90">
-        <div class="px-6 py-5 border-b border-gray-200/60">
-            <div class="flex items-center space-x-3">
-                <div class="w-10 h-10 bg-gradient-to-br from-orange-500 to-red-500 rounded-xl flex items-center justify-center shadow-lg">
-                    <i class="fas fa-exclamation-triangle text-white text-lg"></i>
+    <div class="card" style="margin-bottom: var(--space-8);">
+        <div class="card-header">
+            <div class="flex items-center" style="gap: var(--space-4);">
+                <div style="width: 50px; height: 50px; border-radius: var(--radius-lg); display: flex; align-items: center; justify-content: center; font-size: var(--text-xl); color: white; background: #dc3545; box-shadow: var(--shadow-md);">
+                    <i class="fas fa-exclamation-triangle"></i>
                 </div>
                 <div>
-                    <h2 class="text-xl font-bold text-gray-900">Low Stock Alerts</h2>
-                    <p class="text-sm text-gray-600">Immediate attention required</p>
+                    <h2 class="text-2xl font-bold text-primary">Low Stock Alerts</h2>
+                    <p class="text-sm text-secondary">Immediate attention required</p>
                 </div>
             </div>
         </div>
 
-        <div class="p-6 space-y-4">
+        <div class="card-body">
             @foreach($lowStockIngredients as $ingredient)
-            <div class="flex items-center justify-between p-5 bg-gradient-to-r from-orange-50 to-red-50 rounded-xl border border-orange-200/60 hover:shadow-md transition-all duration-300">
-                <div class="flex items-center space-x-4">
-                    <div class="w-12 h-12 bg-gradient-to-br from-orange-500 to-red-500 rounded-xl flex items-center justify-center shadow-lg">
-                        <i class="fas fa-exclamation text-white"></i>
-                    </div>
-                    <div>
-                        <h4 class="font-bold text-gray-900 text-lg">{{ $ingredient->name }}</h4>
-                        <p class="text-sm text-gray-600">
-                            <span class="font-semibold">Stock:</span> {{ $ingredient->stock_quantity }} {{ $ingredient->unit }} 
-                            • <span class="font-semibold">Threshold:</span> {{ $ingredient->low_stock_threshold }}
-                        </p>
+            <div class="card" style="margin-bottom: var(--space-4); background: rgba(220, 53, 69, 0.1); border: 1px solid rgba(220, 53, 69, 0.3);">
+                <div class="card-body">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center" style="gap: var(--space-4);">
+                            <div style="width: 50px; height: 50px; border-radius: var(--radius-lg); display: flex; align-items: center; justify-content: center; font-size: var(--text-xl); color: white; background: #dc3545;">
+                                <i class="fas fa-exclamation"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-lg font-medium text-primary" style="margin-bottom: var(--space-1);">{{ $ingredient->name }}</h4>
+                                <p class="text-sm text-secondary">
+                                    <span class="font-medium">Stock:</span> {{ $ingredient->stock_quantity }} {{ $ingredient->unit }} 
+                                    • <span class="font-medium">Threshold:</span> {{ $ingredient->low_stock_threshold }}
+                                </p>
+                            </div>
+                        </div>
+
+                        <a href="{{ route('supervisor.ingredients.edit', $ingredient) }}" class="btn btn-primary">
+                            <i class="fas fa-edit" style="margin-right: var(--space-2);"></i>
+                            Adjust Stock
+                        </a>
                     </div>
                 </div>
-
-                <a 
-                    href="{{ route('supervisor.ingredients.edit', $ingredient) }}"
-                    class="inline-flex items-center px-5 py-3 bg-gradient-to-r from-blue-500 to-purple-500 text-white font-semibold rounded-xl hover:shadow-lg transition-all duration-300 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
-                >
-                    <i class="fas fa-edit mr-2"></i>
-                    Adjust Stock
-                </a>
             </div>
             @endforeach
         </div>
     </div>
     @else
     <!-- No Alerts -->
-    <div class="bg-white rounded-2xl shadow-lg border border-green-200 mb-8 backdrop-blur-sm bg-white/90">
-        <div class="px-6 py-5 border-b border-gray-200/60">
-            <div class="flex items-center space-x-3">
-                <div class="w-10 h-10 bg-gradient-to-br from-green-500 to-emerald-500 rounded-xl flex items-center justify-center shadow-lg">
-                    <i class="fas fa-check-circle text-white text-lg"></i>
+    <div class="card" style="margin-bottom: var(--space-8);">
+        <div class="card-header">
+            <div class="flex items-center" style="gap: var(--space-4);">
+                <div style="width: 50px; height: 50px; border-radius: var(--radius-lg); display: flex; align-items: center; justify-content: center; font-size: var(--text-xl); color: white; background: #28a745; box-shadow: var(--shadow-md);">
+                    <i class="fas fa-check-circle"></i>
                 </div>
                 <div>
-                    <h2 class="text-xl font-bold text-gray-900">Inventory Status</h2>
-                    <p class="text-sm text-gray-600">All systems operational</p>
+                    <h2 class="text-2xl font-bold text-primary">Inventory Status</h2>
+                    <p class="text-sm text-secondary">All systems operational</p>
                 </div>
             </div>
         </div>
 
-        <div class="p-8 text-center">
-            <div class="w-20 h-20 bg-gradient-to-br from-green-500 to-emerald-500 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg">
-                <i class="fas fa-check text-white text-2xl"></i>
+        <div class="card-body text-center" style="padding: var(--space-12);">
+            <div style="width: 80px; height: 80px; border-radius: var(--radius-xl); display: flex; align-items: center; justify-content: center; font-size: var(--text-3xl); color: white; background: #28a745; margin: 0 auto var(--space-6); box-shadow: var(--shadow-lg);">
+                <i class="fas fa-check"></i>
             </div>
-            <h3 class="text-xl font-bold text-gray-900 mb-2">All ingredients are well stocked!</h3>
-            <p class="text-gray-600">No low stock alerts at this time.</p>
+            <h3 class="text-2xl font-bold text-primary" style="margin-bottom: var(--space-2);">All ingredients are well stocked!</h3>
+            <p class="text-secondary" style="max-width: 400px; margin: 0 auto;">No low stock alerts at this time. Your inventory is in excellent condition.</p>
         </div>
     </div>
     @endif
 
     <!-- Quick Actions -->
-    <div class="bg-white rounded-2xl shadow-lg border border-gray-200/60 backdrop-blur-sm bg-white/90">
-        <div class="px-6 py-5 border-b border-gray-200/60">
-            <div class="flex items-center space-x-3">
-                <div class="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-500 rounded-xl flex items-center justify-center shadow-lg">
-                    <i class="fas fa-bolt text-white text-lg"></i>
+    <div class="card" style="margin-bottom: var(--space-8);">
+        <div class="card-header">
+            <div class="flex items-center" style="gap: var(--space-4);">
+                <div style="width: 50px; height: 50px; border-radius: var(--radius-lg); display: flex; align-items: center; justify-content: center; font-size: var(--text-xl); color: white; background: var(--accent-color); box-shadow: var(--shadow-md);">
+                    <i class="fas fa-bolt"></i>
                 </div>
                 <div>
-                    <h2 class="text-xl font-bold text-gray-900">Quick Actions</h2>
-                    <p class="text-sm text-gray-600">Manage your inventory efficiently</p>
+                    <h2 class="text-2xl font-bold text-primary">Quick Actions</h2>
+                    <p class="text-sm text-secondary">Manage your inventory efficiently</p>
                 </div>
             </div>
         </div>
 
-        <div class="p-6 grid grid-cols-1 md:grid-cols-3 gap-5">
-            <!-- Add Ingredient -->
-            <a 
-                href="{{ route('supervisor.ingredients.create') }}"
-                class="group flex items-center justify-center px-6 py-5 bg-gradient-to-r from-blue-500 to-purple-500 text-white rounded-xl font-bold hover:shadow-xl transition-all duration-300 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
-            >
-                <div class="w-10 h-10 bg-white/20 rounded-lg flex items-center justify-center mr-3 group-hover:bg-white/30 transition-colors">
-                    <i class="fas fa-plus text-white"></i>
-                </div>
-                <span>Add Ingredient</span>
-            </a>
+        <div class="card-body">
+            <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: var(--space-4);">
+                <!-- Add Ingredient -->
+                <a href="{{ route('supervisor.ingredients.create') }}" class="card" style="text-decoration: none; text-align: center; transition: all var(--transition-base);">
+                    <div class="card-body">
+                        <div style="width: 60px; height: 60px; border-radius: var(--radius-lg); display: flex; align-items: center; justify-content: center; font-size: var(--text-2xl); color: var(--accent-color); background: rgba(58, 134, 255, 0.1); margin: 0 auto var(--space-4); transition: all var(--transition-base);">
+                            <i class="fas fa-plus"></i>
+                        </div>
+                        <h3 class="text-lg font-medium text-primary" style="margin-bottom: var(--space-2);">Add Ingredient</h3>
+                        <p class="text-sm text-secondary">Add new ingredients to your inventory</p>
+                    </div>
+                </a>
 
-            <!-- Create Menu -->
-            <a 
-                href="{{ route('supervisor.menu-items.create') }}"
-                class="group flex items-center justify-center px-6 py-5 bg-gradient-to-r from-blue-500 to-purple-500 text-white rounded-xl font-bold hover:shadow-xl transition-all duration-300 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
-            >
-                <div class="w-10 h-10 bg-white/20 rounded-lg flex items-center justify-center mr-3 group-hover:bg-white/30 transition-colors">
-                    <i class="fas fa-utensils text-white"></i>
-                </div>
-                <span>Create Menu Item</span>
-            </a>
+                <!-- Create Menu -->
+                <a href="{{ route('supervisor.menu-items.create') }}" class="card" style="text-decoration: none; text-align: center; transition: all var(--transition-base);">
+                    <div class="card-body">
+                        <div style="width: 60px; height: 60px; border-radius: var(--radius-lg); display: flex; align-items: center; justify-content: center; font-size: var(--text-2xl); color: var(--accent-color); background: rgba(58, 134, 255, 0.1); margin: 0 auto var(--space-4); transition: all var(--transition-base);">
+                            <i class="fas fa-utensils"></i>
+                        </div>
+                        <h3 class="text-lg font-medium text-primary" style="margin-bottom: var(--space-2);">Create Menu Item</h3>
+                        <p class="text-sm text-secondary">Create new dishes for your menu</p>
+                    </div>
+                </a>
 
-            <!-- Add Recipe -->
-            <a 
-                href="{{ route('supervisor.recipes.create') }}"
-                class="group flex items-center justify-center px-6 py-5 bg-gradient-to-r from-blue-500 to-purple-500 text-white rounded-xl font-bold hover:shadow-xl transition-all duration-300 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
-            >
-                <div class="w-10 h-10 bg-white/20 rounded-lg flex items-center justify-center mr-3 group-hover:bg-white/30 transition-colors">
-                    <i class="fas fa-book text-white"></i>
-                </div>
-                <span>Add Recipe</span>
-            </a>
+                <!-- Add Recipe -->
+                <a href="{{ route('supervisor.recipes.create') }}" class="card" style="text-decoration: none; text-align: center; transition: all var(--transition-base);">
+                    <div class="card-body">
+                        <div style="width: 60px; height: 60px; border-radius: var(--radius-lg); display: flex; align-items: center; justify-content: center; font-size: var(--text-2xl); color: var(--accent-color); background: rgba(58, 134, 255, 0.1); margin: 0 auto var(--space-4); transition: all var(--transition-base);">
+                            <i class="fas fa-book"></i>
+                        </div>
+                        <h3 class="text-lg font-medium text-primary" style="margin-bottom: var(--space-2);">Add Recipe</h3>
+                        <p class="text-sm text-secondary">Define recipes for your menu items</p>
+                    </div>
+                </a>
+            </div>
         </div>
     </div>
 
     <!-- Recent Activity Section -->
-    <div class="mt-8 grid grid-cols-1 lg:grid-cols-2 gap-8">
+    <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: var(--space-6);">
         <!-- Recent Menu Items -->
-        <div class="bg-white rounded-2xl shadow-lg border border-gray-200/60 backdrop-blur-sm bg-white/90">
-            <div class="px-6 py-5 border-b border-gray-200/60">
-                <div class="flex items-center space-x-3">
-                    <div class="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-500 rounded-xl flex items-center justify-center shadow-lg">
-                        <i class="fas fa-utensils text-white text-lg"></i>
+        <div class="card">
+            <div class="card-header">
+                <div class="flex items-center" style="gap: var(--space-4);">
+                    <div style="width: 50px; height: 50px; border-radius: var(--radius-lg); display: flex; align-items: center; justify-content: center; font-size: var(--text-xl); color: var(--primary-dark); background: var(--accent-color); box-shadow: var(--shadow-md);">
+                        <i class="fas fa-utensils"></i>
                     </div>
                     <div>
-                        <h2 class="text-xl font-bold text-gray-900">Recent Menu Items</h2>
-                        <p class="text-sm text-gray-600">Latest additions to the menu</p>
+                        <h2 class="text-2xl font-bold text-primary">Recent Menu Items</h2>
+                        <p class="text-sm text-secondary">Latest additions to the menu</p>
                     </div>
                 </div>
             </div>
-            <div class="p-6">
-                <div class="text-center py-8 text-gray-500">
-                    <i class="fas fa-clock text-3xl mb-3 opacity-50"></i>
+            <div class="card-body text-center" style="padding: var(--space-8);">
+                <div class="text-secondary">
+                    <i class="fas fa-clock" style="font-size: var(--text-4xl); margin-bottom: var(--space-4); opacity: 0.5;"></i>
                     <p>Recent activity will appear here</p>
                 </div>
             </div>
         </div>
 
         <!-- Inventory Overview -->
-        <div class="bg-white rounded-2xl shadow-lg border border-gray-200/60 backdrop-blur-sm bg-white/90">
-            <div class="px-6 py-5 border-b border-gray-200/60">
-                <div class="flex items-center space-x-3">
-                    <div class="w-10 h-10 bg-gradient-to-br from-green-500 to-emerald-500 rounded-xl flex items-center justify-center shadow-lg">
-                        <i class="fas fa-chart-bar text-white text-lg"></i>
+        <div class="card">
+            <div class="card-header">
+                <div class="flex items-center" style="gap: var(--space-4);">
+                    <div style="width: 50px; height: 50px; border-radius: var(--radius-lg); display: flex; align-items: center; justify-content: center; font-size: var(--text-xl); color: white; background: #28a745; box-shadow: var(--shadow-md);">
+                        <i class="fas fa-chart-bar"></i>
                     </div>
                     <div>
-                        <h2 class="text-xl font-bold text-gray-900">Inventory Overview</h2>
-                        <p class="text-sm text-gray-600">Stock levels and trends</p>
+                        <h2 class="text-2xl font-bold text-primary">Inventory Overview</h2>
+                        <p class="text-sm text-secondary">Stock levels and trends</p>
                     </div>
                 </div>
             </div>
-            <div class="p-6">
-                <div class="text-center py-8 text-gray-500">
-                    <i class="fas fa-chart-pie text-3xl mb-3 opacity-50"></i>
+            <div class="card-body text-center" style="padding: var(--space-8);">
+                <div class="text-secondary">
+                    <i class="fas fa-chart-pie" style="font-size: var(--text-4xl); margin-bottom: var(--space-4); opacity: 0.5;"></i>
                     <p>Inventory analytics will appear here</p>
                 </div>
             </div>
         </div>
     </div>
-
 </div>
+
+<style>
+    .card:hover {
+        transform: translateY(-2px);
+    }
+    
+    .card a:hover {
+        background: var(--accent-color);
+        color: white;
+    }
+    
+    .card a:hover .text-primary,
+    .card a:hover .text-secondary {
+        color: white;
+    }
+    
+    .card a:hover div[style*="background: rgba(58, 134, 255, 0.1)"] {
+        background: rgba(255, 255, 255, 0.2) !important;
+        color: white;
+    }
+</style>
 @endsection

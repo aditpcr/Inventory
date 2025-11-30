@@ -7,20 +7,23 @@
 
     <title>@yield('title', 'Restaurant Management System')</title>
 
-    <!-- Tailwind CSS CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Davis Design System CSS -->
+    <link rel="stylesheet" href="{{ asset('css/davis-design-system.css') }}">
     
     <!-- Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
+    <!-- Alpine.js for interactivity -->
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+    
     <style>
         .sidebar-transition {
-            transition: all 0.3s ease;
+            transition: all var(--transition-base);
         }
         .active-nav-item {
-            background-color: #dbeafe;
-            border-left: 4px solid #2563eb;
-            color: #2563eb;
+            background-color: var(--background-light);
+            border-left: 4px solid var(--accent-color);
+            color: var(--accent-color);
         }
         
         /* Custom scrollbar */
@@ -28,38 +31,38 @@
             width: 6px;
         }
         ::-webkit-scrollbar-track {
-            background: #f1f5f9;
+            background: var(--background-light);
         }
         ::-webkit-scrollbar-thumb {
-            background: #cbd5e1;
+            background: var(--border-light);
             border-radius: 3px;
         }
         ::-webkit-scrollbar-thumb:hover {
-            background: #94a3b8;
+            background: var(--text-light);
         }
     </style>
 </head>
-<body class="bg-gray-50/50">
+<body>
     @auth
         <!-- Include the updated header partial -->
         @include('partials.header')
 
         <!-- Spacer for fixed header -->
-        <div class="h-20"></div>
+        <div style="height: 120px;"></div>
 
         <!-- Page Header with Actions Section -->
-        <div class="container mx-auto px-6 mb-6">
+        <div class="container" style="margin-bottom: var(--space-6);">
             <div class="flex items-center justify-between">
                 <div>
                     @hasSection('title')
-                        <h1 class="text-3xl font-black text-gray-900">@yield('title')</h1>
+                        <h1 class="text-3xl font-bold text-primary" style="margin-bottom: var(--space-2);">@yield('title')</h1>
                     @endif
                     @hasSection('subtitle')
-                        <p class="text-gray-600 mt-2">@yield('subtitle')</p>
+                        <p class="text-secondary" style="margin-top: var(--space-2);">@yield('subtitle')</p>
                     @endif
                     
                     @hasSection('breadcrumbs')
-                        <div class="mt-2">
+                        <div style="margin-top: var(--space-2);">
                             @yield('breadcrumbs')
                         </div>
                     @endif
@@ -73,19 +76,16 @@
             </div>
         </div>
 
-        <main class="min-h-screen">
+        <main style="min-height: calc(100vh - 200px); padding-bottom: var(--space-12);">
             @yield('content')
         </main>
     @else
-        <main>
+        <main style="padding-bottom: var(--space-12);">
             @yield('content')
         </main>
     @endauth
 
     @include('partials.footer')
-
-    <!-- Alpine.js for interactivity -->
-    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
     
     @stack('scripts')
 </body>

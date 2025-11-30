@@ -4,98 +4,90 @@
 @section('subtitle', 'Create a new menu item for your restaurant')
 
 @section('breadcrumbs')
-<div class="flex items-center space-x-2 text-sm">
-    <a href="{{ route('supervisor.menu-items.index') }}" class="text-blue-600 hover:text-blue-700 font-medium flex items-center">
-        <i class="fas fa-utensils mr-2"></i>Menu Items
+<div class="flex items-center" style="gap: var(--space-2); font-size: var(--text-sm);">
+    <a href="{{ route('supervisor.menu-items.index') }}" class="text-accent font-medium flex items-center nav-link">
+        <i class="fas fa-utensils" style="margin-right: var(--space-2);"></i>Menu Items
     </a>
-    <i class="fas fa-chevron-right text-gray-400 text-xs"></i>
-    <span class="text-gray-500 font-medium">Add New</span>
+    <i class="fas fa-chevron-right text-light" style="font-size: var(--text-xs);"></i>
+    <span class="text-secondary font-medium">Add New</span>
 </div>
 @endsection
 
 @section('content')
-<div class="max-w-2xl mx-auto">
-    <!-- Header -->
-    <div class="mb-6">
-        <div class="flex items-center space-x-3 mb-2">
-            <div class="w-10 h-10 bg-gradient-to-br from-orange-500 to-red-500 rounded-xl flex items-center justify-center shadow-lg">
-                <i class="fas fa-plus text-white text-lg"></i>
-            </div>
-            <h1 class="text-2xl font-black text-gray-900">Add New Menu Item</h1>
-        </div>
-        <p class="text-gray-600">Create a new menu item for your restaurant</p>
-    </div>
-
+<div class="container" style="max-width: 800px;">
     <!-- Form Card -->
-    <div class="bg-white rounded-2xl shadow-lg border border-gray-200/60 backdrop-blur-sm bg-white/90">
-        <div class="px-6 py-5 border-b border-gray-200/60">
-            <h2 class="text-lg font-bold text-gray-900">Menu Item Information</h2>
+    <div class="card">
+        <div class="card-header">
+            <div class="flex items-center" style="gap: var(--space-3);">
+                <div style="width: 40px; height: 40px; background: var(--accent-color); border-radius: var(--radius-lg); display: flex; align-items: center; justify-content: center; box-shadow: var(--shadow-base);">
+                    <i class="fas fa-plus" style="color: var(--primary-dark); font-size: var(--text-lg);"></i>
+                </div>
+                <h2 class="text-lg font-bold text-primary">Menu Item Information</h2>
+            </div>
         </div>
         
-        <form action="{{ route('supervisor.menu-items.store') }}" method="POST" class="p-6">
+        <form action="{{ route('supervisor.menu-items.store') }}" method="POST" class="card-body">
             @csrf
             
-            <div class="space-y-6">
+            <div style="display: flex; flex-direction: column; gap: var(--space-6);">
                 <!-- Menu Item Name -->
                 <div>
-                    <label for="name" class="block text-sm font-semibold text-gray-700 mb-2 flex items-center">
-                        <i class="fas fa-tag mr-2 text-orange-500"></i>Menu Item Name *
+                    <label for="name" class="form-label flex items-center">
+                        <i class="fas fa-tag" style="margin-right: var(--space-2); color: var(--accent-color);"></i>Menu Item Name *
                     </label>
                     <input type="text" name="name" id="name" value="{{ old('name') }}" 
-                           class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 bg-white/80 backdrop-blur-sm"
+                           class="form-input"
                            placeholder="Enter menu item name" required>
                     @error('name')
-                        <p class="mt-2 text-sm text-red-600 flex items-center">
-                            <i class="fas fa-exclamation-circle mr-1"></i>{{ $message }}
+                        <p class="text-sm" style="color: #dc3545; margin-top: var(--space-2); display: flex; align-items: center;">
+                            <i class="fas fa-exclamation-circle" style="margin-right: var(--space-1);"></i>{{ $message }}
                         </p>
                     @enderror
                 </div>
 
                 <!-- Price -->
                 <div>
-                    <label for="price" class="block text-sm font-semibold text-gray-700 mb-2 flex items-center">
-                        <i class="fas fa-money-bill-wave mr-2 text-green-500"></i>Price *
+                    <label for="price" class="form-label flex items-center">
+                        <i class="fas fa-money-bill-wave" style="margin-right: var(--space-2); color: #28a745;"></i>Price *
                     </label>
-                    <div class="relative">
-                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                            <span class="text-gray-500 font-medium">Rp</span>
+                    <div style="position: relative;">
+                        <div style="position: absolute; top: 50%; left: var(--space-3); transform: translateY(-50%); pointer-events: none;">
+                            <span class="text-secondary font-medium">Rp</span>
                         </div>
                         <input type="number" name="price" id="price" value="{{ old('price') }}" 
-                               class="w-full pl-12 pr-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 bg-white/80 backdrop-blur-sm"
+                               class="form-input" style="padding-left: 3rem;"
                                min="0" step="0.01" placeholder="0.00" required>
                     </div>
                     @error('price')
-                        <p class="mt-2 text-sm text-red-600 flex items-center">
-                            <i class="fas fa-exclamation-circle mr-1"></i>{{ $message }}
+                        <p class="text-sm" style="color: #dc3545; margin-top: var(--space-2); display: flex; align-items: center;">
+                            <i class="fas fa-exclamation-circle" style="margin-right: var(--space-1);"></i>{{ $message }}
                         </p>
                     @enderror
                 </div>
 
                 <!-- Availability -->
-                <div class="flex items-center p-4 bg-gray-50 rounded-xl border border-gray-200">
+                <div class="flex items-center" style="padding: var(--space-4); background: var(--background-light); border-radius: var(--radius-lg); border: 1px solid var(--border-light);">
                     <input type="checkbox" name="available" id="available" value="1" {{ old('available', true) ? 'checked' : '' }}
-                           class="w-5 h-5 text-blue-600 border-gray-300 rounded focus:ring-blue-500 transition duration-200">
-                    <label for="available" class="ml-3 block text-sm font-semibold text-gray-700 flex items-center">
-                        <i class="fas fa-toggle-on mr-2 text-green-500"></i>
+                           style="width: 20px; height: 20px; cursor: pointer; accent-color: var(--accent-color);">
+                    <label for="available" class="form-label" style="margin: 0; margin-left: var(--space-3); cursor: pointer; display: flex; align-items: center;">
+                        <i class="fas fa-toggle-on" style="margin-right: var(--space-2); color: #28a745;"></i>
                         Available for ordering
                     </label>
                 </div>
                 @error('available')
-                    <p class="mt-2 text-sm text-red-600 flex items-center">
-                        <i class="fas fa-exclamation-circle mr-1"></i>{{ $message }}
+                    <p class="text-sm" style="color: #dc3545; margin-top: var(--space-2); display: flex; align-items: center;">
+                        <i class="fas fa-exclamation-circle" style="margin-right: var(--space-1);"></i>{{ $message }}
                     </p>
                 @enderror
             </div>
 
             <!-- Form Actions -->
-            <div class="flex items-center justify-end space-x-4 pt-6 mt-6 border-t border-gray-200">
-                <a href="{{ route('supervisor.menu-items.index') }}" 
-                   class="flex items-center px-6 py-3 border border-gray-300 text-gray-700 rounded-xl font-semibold hover:bg-gray-50 transition-all duration-200">
-                    <i class="fas fa-arrow-left mr-2"></i>Cancel
+            <div class="flex items-center justify-end" style="gap: var(--space-4); padding-top: var(--space-6); margin-top: var(--space-6); border-top: 1px solid var(--border-light);">
+                <a href="{{ route('supervisor.menu-items.index') }}" class="btn btn-outline">
+                    <i class="fas fa-arrow-left" style="margin-right: var(--space-2);"></i>Cancel
                 </a>
-                <button type="submit" 
-                        class="flex items-center px-6 py-3 bg-gradient-to-r from-orange-500 to-red-500 text-white rounded-xl font-bold hover:shadow-lg transition-all duration-200 hover:scale-105">
-                    <i class="fas fa-save mr-2"></i>Create Menu Item
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-save" style="margin-right: var(--space-2);"></i>Create Menu Item
                 </button>
             </div>
         </form>

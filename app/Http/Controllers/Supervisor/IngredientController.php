@@ -8,10 +8,42 @@ use Illuminate\Http\Request;
 
 class IngredientController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $ingredients = Ingredient::all();
-        return view('supervisor.ingredients.index', compact('ingredients'));
+        $query = Ingredient::query();
+
+        // Filter by name
+        if ($request->filled('name')) {
+            $query->where('name', 'like', '%' . $request->name . '%');
+        }
+
+        // Filter by unit
+        if ($request->filled('unit')) {
+            $query->where('unit', $request->unit);
+        }
+
+        // Filter by stock status
+        if ($request->filled('stock_status')) {
+            switch ($request->stock_status) {
+                case 'in_stock':
+                    $query->where('stock_quantity', '>', 0);
+                    break;
+                case 'low_stock':
+                    $query->whereRaw('stock_quantity <= low_stock_threshold AND stock_quantity > 0');
+                    break;
+                case 'out_of_stock':
+                    $query->where('stock_quantity', '<=', 0);
+                    break;
+            }
+        }
+
+        // Get all ingredients for stats (before pagination)
+        $allIngredients = Ingredient::all();
+
+        // Paginate results
+        $ingredients = $query->orderBy('name')->paginate(10)->withQueryString();
+
+        return view('supervisor.ingredients.index', compact('ingredients', 'allIngredients'));
     }
 
     public function create()
