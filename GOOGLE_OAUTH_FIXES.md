@@ -60,8 +60,8 @@ GUZZLE_VERIFY_SSL=true  # Set to true in production
 
 ### Google OAuth Settings
 Already configured in `config/services.php`:
-- Client ID: 
-- Client Secret: 
+- Client ID: `785199507806-jbsapl5pua7frahaeubnuj9g3qajc8c6.apps.googleusercontent.com`
+- Client Secret: `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`
 - Redirect URI: `http://127.0.0.1:8000/auth/google/callback` (update for production)
 
 ## Testing Checklist

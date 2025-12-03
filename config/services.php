@@ -35,6 +35,10 @@ return [
         ],
     ],
 
-
+    'google' => [
+        'client_id' => env('GOOGLE_CLIENT_ID', '785199507806-jbsapl5pua7frahaeubnuj9g3qajc8c6.apps.googleusercontent.com'),
+        'client_secret' => env('GOOGLE_CLIENT_SECRET', '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'),
+        'redirect' => env('GOOGLE_REDIRECT_URI', env('APP_URL', 'http://localhost') . '/auth/google/callback'),
+    ],
 
 ];
