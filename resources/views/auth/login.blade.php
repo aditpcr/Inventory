@@ -354,6 +354,26 @@
                     </button>
                 </form>
 
+                <!-- Divider -->
+                <div style="display: flex; align-items: center; margin: var(--space-6) 0; text-align: center;">
+                    <div style="flex: 1; height: 1px; background: var(--border-light);"></div>
+                    <span style="padding: 0 var(--space-4); color: var(--text-secondary); font-size: var(--text-sm);">OR</span>
+                    <div style="flex: 1; height: 1px; background: var(--border-light);"></div>
+                </div>
+
+                <!-- Google Login Button -->
+                <a href="{{ route('google.login') }}" class="btn w-full" style="background: white; color: #4285F4; border: 1px solid #dadce0; margin-bottom: var(--space-4); display: flex; align-items: center; justify-content: center; gap: var(--space-2);">
+                    <svg width="18" height="18" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg">
+                        <g fill="#000" fill-rule="evenodd">
+                            <path d="M9 3.48c1.69 0 2.83.73 3.48 1.34l2.54-2.48C13.46.89 11.43 0 9 0 5.48 0 2.44 2.02.96 4.96l2.91 2.26C4.6 5.05 6.62 3.48 9 3.48z" fill="#EA4335"/>
+                            <path d="M17.64 9.2c0-.74-.06-1.28-.19-1.84H9v3.34h4.96c-.21 1.18-.88 2.09-1.85 2.7v2.26h2.99c1.75-1.61 2.76-3.98 2.76-6.46z" fill="#4285F4"/>
+                            <path d="M3.88 10.78c-.23-.69-.36-1.43-.36-2.18s.13-1.49.36-2.18L.96 4.16C.35 5.35 0 6.64 0 8s.35 2.65.96 3.84l2.92-2.06z" fill="#FBBC05"/>
+                            <path d="M9 18c2.43 0 4.47-.8 5.96-2.18l-2.99-2.26c-.76.53-1.78.9-2.97.9-2.38 0-4.4-1.57-5.12-3.74L.96 13.84C2.45 16.2 5.48 18 9 18z" fill="#34A853"/>
+                        </g>
+                    </svg>
+                    <span>Continue with Google</span>
+                </a>
+
                 <div class="test-accounts">
                     <h6><i class="fas fa-vial" style="margin-right: var(--space-2);"></i>Test Accounts</h6>
                     

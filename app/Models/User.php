@@ -15,6 +15,8 @@ class User extends Authenticatable
         'email',
         'password',
         'role',
+        'google_id',
+        'role_status',
     ];
 
     protected $hidden = [
@@ -52,5 +54,32 @@ class User extends Authenticatable
     public function scopeByRole($query, $role)
     {
         return $query->where('role', $role);
+    }
+
+    // Relationships
+    public function roleRequests()
+    {
+        return $this->hasMany(RoleRequest::class);
+    }
+
+    public function reviewedRoleRequests()
+    {
+        return $this->hasMany(RoleRequest::class, 'reviewed_by');
+    }
+
+    // Status checks
+    public function isPending(): bool
+    {
+        return $this->role_status === 'pending';
+    }
+
+    public function isActive(): bool
+    {
+        return $this->role_status === 'active';
+    }
+
+    public function hasRole(): bool
+    {
+        return !is_null($this->role);
     }
 }

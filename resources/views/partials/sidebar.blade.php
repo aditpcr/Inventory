@@ -28,6 +28,10 @@
                 <i class="fas fa-users-gear"></i>
                 <span>User Management</span>
             </a>
+            <a href="{{ route('admin.role-requests.index') }}" class="nav-link {{ Str::startsWith($routeName, 'admin.role-requests') ? 'active-nav-item' : '' }}" style="display: flex; align-items: center; gap: var(--space-3); padding: var(--space-3); border-radius: var(--radius-md);">
+                <i class="fas fa-user-shield"></i>
+                <span>Role Requests</span>
+            </a>
         @endif
 
         @if($user->isSupervisor() || $user->isAdmin())

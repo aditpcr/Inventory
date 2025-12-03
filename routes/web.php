@@ -11,6 +11,9 @@ use App\Http\Controllers\Employee\OrderController;
 use App\Http\Controllers\Employee\PosController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SupervisorDashboardController;
+use App\Http\Controllers\Auth\SocialAuthController;
+use App\Http\Controllers\RoleRequestController;
+use App\Http\Controllers\Admin\RoleRequestController as AdminRoleRequestController;
 
 // ---------------------------
 // AUTHENTICATION
@@ -18,6 +21,10 @@ use App\Http\Controllers\SupervisorDashboardController;
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [LoginController::class, 'login']);
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
+
+// Google OAuth Routes
+Route::get('/auth/google', [SocialAuthController::class, 'redirectToGoogle'])->name('google.login');
+Route::get('/auth/google/callback', [SocialAuthController::class, 'handleGoogleCallback'])->name('google.callback');
 
 Route::get('/', fn() => redirect('/login'));
 
@@ -44,6 +51,14 @@ Route::middleware(['auth'])->group(function () {
             Route::resource('users', UserController::class);
             Route::post('users/{user}/reset-password', [UserController::class, 'resetPassword'])
                 ->name('users.reset-password');
+
+            // Role Requests Management
+            Route::get('role-requests', [AdminRoleRequestController::class, 'index'])
+                ->name('role-requests.index');
+            Route::post('role-requests/{roleRequest}/approve', [AdminRoleRequestController::class, 'approve'])
+                ->name('role-requests.approve');
+            Route::post('role-requests/{roleRequest}/reject', [AdminRoleRequestController::class, 'reject'])
+                ->name('role-requests.reject');
         });
 
     // ----------------------------------------
@@ -85,6 +100,12 @@ Route::middleware(['auth'])->group(function () {
             // Order Management
             Route::resource('orders', OrderController::class)->only(['index', 'show']);
         });
+
+    // ----------------------------------------
+    // ROLE REQUEST (All Authenticated Users)
+    // ----------------------------------------
+    Route::get('/role-request', [RoleRequestController::class, 'create'])->name('role-request.create');
+    Route::post('/role-request', [RoleRequestController::class, 'store'])->name('role-request.store');
 
     // ----------------------------------------
     // PROFILE MANAGEMENT (All Authenticated Users)

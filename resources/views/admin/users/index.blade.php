@@ -10,9 +10,20 @@
 @endsection
 
 @section('actions')
-<a href="{{ route('admin.users.create') }}" class="btn btn-primary">
-    <i class="fas fa-plus" style="margin-right: var(--space-2);"></i>Add New User
-</a>
+<div class="flex items-center" style="gap: var(--space-3);">
+    <a href="{{ route('admin.role-requests.index') }}" class="btn" style="background: #ffc107; color: white; border: none;">
+        <i class="fas fa-user-shield" style="margin-right: var(--space-2);"></i>Role Requests
+        @php
+            $pendingCount = \App\Models\RoleRequest::where('status', 'pending')->count();
+        @endphp
+        @if($pendingCount > 0)
+            <span class="badge" style="background: #dc3545; color: white; margin-left: var(--space-2); padding: 2px 6px; border-radius: 10px; font-size: 11px;">{{ $pendingCount }}</span>
+        @endif
+    </a>
+    <a href="{{ route('admin.users.create') }}" class="btn btn-primary">
+        <i class="fas fa-plus" style="margin-right: var(--space-2);"></i>Add New User
+    </a>
+</div>
 @endsection
 
 @section('content')

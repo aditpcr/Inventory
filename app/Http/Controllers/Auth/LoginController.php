@@ -25,6 +25,12 @@ class LoginController extends Controller
             
             $user = Auth::user();
             
+            // If user is pending or has no role, redirect to role request page
+            if ($user->isPending() || !$user->hasRole()) {
+                return redirect()->route('role-request.create')
+                    ->with('info', 'Please select a role to continue.');
+            }
+            
             // Redirect based on role
             switch ($user->role) {
                 case 'admin':

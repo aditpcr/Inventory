@@ -10,6 +10,12 @@ class DashboardController extends Controller
     {
         $user = auth()->user();
         
+        // If user is pending or has no role, redirect to role request page
+        if ($user->isPending() || !$user->hasRole()) {
+            return redirect()->route('role-request.create')
+                ->with('info', 'Please select a role to continue.');
+        }
+        
         switch ($user->role) {
             case 'admin':
                 return redirect('/admin/users');
