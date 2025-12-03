@@ -62,7 +62,7 @@
             <!-- Right Section: User Menu -->
             <div class="flex items-center" style="gap: var(--space-4);">
                 <!-- Profile Button -->
-                <a href="{{ route('profile.edit') }}" class="btn btn-outline" style="display: flex; align-items: center; gap: var(--space-2);">
+                <a href="#" class="btn btn-outline" style="display: flex; align-items: center; gap: var(--space-2);">
                     <div style="width: 32px; height: 32px; background: var(--accent-color); border-radius: var(--radius-lg); display: flex; align-items: center; justify-content: center; color: var(--primary-dark); font-weight: 600; font-size: var(--text-sm);">
                         {{ strtoupper(substr(auth()->user()->name, 0, 1)) }}
                     </div>
@@ -171,13 +171,13 @@
         // Mobile menu toggle
         const mobileMenuButton = document.getElementById('mobileMenuButton');
         const mobileMenu = document.getElementById('mobileMenu');
-        
+
         if (mobileMenuButton && mobileMenu) {
             // Show mobile menu button on small screens
             if (window.innerWidth <= 1024) {
                 mobileMenuButton.style.display = 'flex';
             }
-            
+
             window.addEventListener('resize', function() {
                 if (window.innerWidth <= 1024) {
                     mobileMenuButton.style.display = 'flex';
@@ -186,10 +186,10 @@
                     mobileMenu.style.display = 'none';
                 }
             });
-            
+
             mobileMenuButton.addEventListener('click', function() {
                 mobileMenu.style.display = mobileMenu.style.display === 'block' ? 'none' : 'block';
-                
+
                 // Toggle icon
                 const icon = mobileMenuButton.querySelector('i');
                 if (mobileMenu.style.display === 'block') {
@@ -207,12 +207,12 @@
         .nav-links {
             display: none !important;
         }
-        
+
         #mobileMenuButton {
             display: flex !important;
         }
     }
-    
+
     @media (max-width: 640px) {
         .dropdown-toggle .flex.flex-col {
             display: none;
