@@ -26,7 +26,7 @@
             </div>
         </div>
         
-        <form action="{{ route('supervisor.recipes.update', $menuItemIngredient) }}" method="POST" class="card-body">
+        <form action="{{ route('supervisor.recipes.update', $recipe) }}" method="POST" class="card-body">
             @csrf
             @method('PUT')
             
@@ -36,7 +36,7 @@
                     <label class="form-label flex items-center">
                         <i class="fas fa-utensils" style="margin-right: var(--space-2); color: var(--accent-color);"></i>Menu Item
                     </label>
-                    <input type="text" value="{{ $menuItemIngredient->menuItem->name }}" 
+                    <input type="text" value="{{ $recipe->menuItem->name }}" 
                            class="form-input" disabled style="background: var(--background-light); opacity: 0.7;">
                 </div>
 
@@ -48,7 +48,7 @@
                     <select name="ingredient_id" id="ingredient_id" class="form-input" required>
                         <option value="">Select Ingredient</option>
                         @foreach($ingredients as $ingredient)
-                        <option value="{{ $ingredient->id }}" {{ old('ingredient_id', $menuItemIngredient->ingredient_id) == $ingredient->id ? 'selected' : '' }}>
+                        <option value="{{ $ingredient->id }}" {{ old('ingredient_id', $recipe->ingredient_id) == $ingredient->id ? 'selected' : '' }}>
                             {{ $ingredient->name }} ({{ $ingredient->stock_quantity }} {{ $ingredient->unit }})
                         </option>
                         @endforeach
@@ -65,7 +65,7 @@
                     <label for="quantity_needed" class="form-label flex items-center">
                         <i class="fas fa-balance-scale" style="margin-right: var(--space-2); color: #8b5cf6;"></i>Quantity Needed *
                     </label>
-                    <input type="number" name="quantity_needed" id="quantity_needed" value="{{ old('quantity_needed', $menuItemIngredient->quantity_needed) }}" 
+                    <input type="number" name="quantity_needed" id="quantity_needed" value="{{ old('quantity_needed', $recipe->quantity_needed) }}" 
                            class="form-input"
                            min="0" step="0.01" placeholder="0.00" required>
                     @error('quantity_needed')
