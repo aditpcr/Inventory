@@ -213,17 +213,17 @@
         </div>
         @endif
 
-        <!-- Pagination -->
+        <!-- Pagination with Query String Preservation -->
         @if($ingredients->hasPages())
         <div class="card-footer" style="padding: var(--space-4) var(--space-6); border-top: 1px solid var(--border-light);">
-            <div class="pagination-wrapper">
-                <div class="pagination-info">
-                    <span class="pagination-text">
-                        Showing {{ $ingredients->firstItem() }} to {{ $ingredients->lastItem() }} of {{ $ingredients->total() }} results
+            <div class="pagination-wrapper" style="display: flex; flex-direction: column; gap: var(--space-4); align-items: center; justify-content: space-between;">
+                <div class="pagination-info" style="width: 100%;">
+                    <span class="pagination-text" style="font-size: var(--text-sm); color: var(--text-secondary);">
+                        Showing <strong>{{ $ingredients->firstItem() }}</strong> to <strong>{{ $ingredients->lastItem() }}</strong> of <strong>{{ $ingredients->total() }}</strong> ingredients
                     </span>
                 </div>
-                <nav aria-label="Page navigation">
-                    {{ $ingredients->links() }}
+                <nav aria-label="Page navigation" style="width: 100%;">
+                    {{ $ingredients->appends(request()->query())->links('vendor.pagination.custom') }}
                 </nav>
             </div>
         </div>

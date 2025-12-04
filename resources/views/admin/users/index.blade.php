@@ -11,8 +11,8 @@
 
 @section('actions')
 <div class="flex items-center" style="gap: var(--space-3);">
-    <a href="{{ route('admin.role-requests.index') }}" class="btn" style="background: #ffc107; color: white; border: none;">
-        <i class="fas fa-user-shield" style="margin-right: var(--space-2);"></i>Role Requests
+    <a href="{{ route('admin.role-requests.index') }}" class="btn btn-primary d-flex align-items-center">
+        <i class="fas fa-user-shield me-2" style="margin-right: var(--space-2);"></i>Role Requests
         @php
             $pendingCount = \App\Models\RoleRequest::where('status', 'pending')->count();
         @endphp

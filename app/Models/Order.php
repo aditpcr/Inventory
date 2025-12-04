@@ -27,19 +27,5 @@ class Order extends Model
     public function orderItems()
     {
         return $this->hasMany(OrderItem::class);
-    }
-
-    // Automatically deduct stock when order is created
-    protected static function booted()
-    {
-        static::created(function ($order) {
-            foreach ($order->orderItems as $orderItem) {
-                $menuItem = $orderItem->menuItem;
-                foreach ($menuItem->menuItemIngredients as $recipe) {
-                    $deduction = $recipe->quantity_needed * $orderItem->quantity;
-                    $recipe->ingredient->decrement('stock_quantity', $deduction);
-                }
-            }
-        });
-    }
+    }    
 }

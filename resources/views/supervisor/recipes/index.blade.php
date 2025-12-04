@@ -223,14 +223,14 @@
         <!-- Pagination -->
         @if($menuItems->hasPages())
         <div class="card-footer" style="padding: var(--space-4) var(--space-6); border-top: 1px solid var(--border-light);">
-            <div class="pagination-wrapper">
-                <div class="pagination-info">
-                    <span class="pagination-text">
-                        Showing {{ $menuItems->firstItem() }} to {{ $menuItems->lastItem() }} of {{ $menuItems->total() }} menu items
+            <div class="pagination-wrapper" style="display: flex; flex-direction: column; gap: var(--space-4); align-items: center; justify-content: space-between;">
+                <div class="pagination-info" style="width: 100%;">
+                    <span class="pagination-text" style="font-size: var(--text-sm); color: var(--text-secondary);">
+                        Showing <strong>{{ $menuItems->firstItem() }}</strong> to <strong>{{ $menuItems->lastItem() }}</strong> of <strong>{{ $menuItems->total() }}</strong> menu items
                     </span>
                 </div>
-                <nav aria-label="Page navigation">
-                    {{ $menuItems->links() }}
+                <nav aria-label="Page navigation" style="width: 100%;">
+                    {{ $menuItems->links('vendor.pagination.custom') }}
                 </nav>
             </div>
         </div>
